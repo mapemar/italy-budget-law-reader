@@ -8920,6 +8920,236 @@
    "low_priority": null,
    "csr": null,
    "profile": null
+  },
+  {
+   "law_id": "lb-2027",
+   "id": "M009",
+   "title_en": "Financial transaction tax: rates on share transfers and high-frequency trading doubled",
+   "description_en": "Doubles the rates of the financial transaction tax (imposta sulle transazioni finanziarie) in the consolidated act on minor State taxes (Legislative Decree 174/2024, in force from 1 January 2027): the rate on transfers of ownership of shares and other participating financial instruments rises from 0.4% to 0.8% of the transaction value (Article 42(1)), and the rate of the tax on high-frequency trading from 0.04% to 0.08% (Article 46(1)). The halving of the rate for transfers on regulated markets and multilateral trading facilities and the other rules on the tax (taxable events, payment, taxpayers, exemptions) are unchanged. The rates had already been doubled, from 0.2% and 0.02%, from 1 January 2026 by the 2026 Budget Law. Permanent. The Technical Report quantifies only the tax on share transfers.",
+   "refs": [
+    "A15-p1"
+   ],
+   "fiscal_rows": [
+    "F0108"
+   ],
+   "seed": "summary_table",
+   "lineage": {
+    "merged_from": [],
+    "split_from": null,
+    "note": "Seeded from F0108 (summary table, p. 426), which covers the rate on share transfers in Article 42(1) of Legislative Decree 174/2024 (Article 15(1)(a)). Article 15(1)(b), the rate of the high-frequency trading tax in Article 46(1), has no row and no quantification and was kept in this measure: the explanatory report presents the two changes as one intervention, the second keeping a consistent ratio between types of transaction (AC 3174, Tomo I, pp. 96-97); the Technical Report treats the article as one provision and quantifies it only on the 2026 revenue forecast for the tax on share transfers, tax code 4058 (p. 234); the dossier presents both increases and attributes the revenue to the increase from 0.4% to 0.8% (vol. I, p. 82). Taxpayer, halved rate and 2026 increase from the dossier (vol. I, p. 84). See U012."
+   },
+   "thematic": null,
+   "ministry": null,
+   "relevance": null,
+   "low_priority": null,
+   "csr": null,
+   "profile": null
+  },
+  {
+   "law_id": "lb-2027",
+   "id": "M010",
+   "title_en": "Non-commercial entities: taxable share of dividends received raised from 50% to 55%",
+   "description_en": "Reduces from 50% to 45% the share of profits received by non-commercial entities that is excluded from their taxable income for corporate income tax (IRES), so that 55% becomes taxable, by amending Article 153(2) of the consolidated income tax act (Legislative Decree 117/2026). The relief, introduced by Article 1(44)-(47) of Law 178/2020, applies to banking foundations (fondazioni di origine bancaria) and other non-commercial entities that carry on activities of general interest on a non-profit basis. Applies from the 2027 tax period, including its IRES advance payment, which is calculated on the previous year's tax recalculated under the new rule (paragraph 2). Permanent.",
+   "refs": [
+    "A16-p1",
+    "A16-p2"
+   ],
+   "fiscal_rows": [
+    "F0109"
+   ],
+   "seed": "summary_table",
+   "lineage": {
+    "merged_from": [],
+    "split_from": null,
+    "note": "Seeded from F0109 (summary table, p. 426), which cites Article 16(1); refs extended to paragraph 2 (advance payment for the 2027 tax period), whose effect is included in the 2027 value: the Technical Report computes the cash effect with a 75% IRES advance because the rule applies from the 2027 tax period and to its advance (AC 3174, Tomo I, p. 235). Entities concerned and origin of the relief from the explanatory report (p. 97), the Technical Report (p. 235) and the dossier (vol. I, p. 86). See U013 and U019."
+   },
+   "thematic": null,
+   "ministry": null,
+   "relevance": null,
+   "low_priority": null,
+   "csr": null,
+   "profile": null
+  },
+  {
+   "law_id": "lb-2027",
+   "id": "M011",
+   "title_en": "Exit tax on unrealised financial gains on the transfer of tax residence abroad",
+   "description_en": "Introduces an exit tax on the transfer of tax residence abroad (new Article 307-bis of the consolidated income tax act, Legislative Decree 117/2026), applying to individuals and also to simple partnerships (società semplici) and equivalent non-business entities and to non-commercial entities. Where the transfer ends Italy's taxing rights, unrealised gains on assets producing financial 'redditi diversi' (Article 76(1)(d)-(i)) are taxed under the rules ordinarily applicable to each type of income (26% according to the Technical Report), on the positive differences between market value (valore normale) at the end of the tax period preceding the loss of residence and tax cost; income from Italian government and equivalent bonds, and from bonds of white-list States and their territorial entities, counts for 48.08%. It applies where the taxpayer was resident for at least six of the previous ten tax periods and the relevant assets are worth at least EUR 800,000. The tax is due within 180 days; for transfers within the EU, or to States with adequate exchange-of-information and recovery-assistance agreements, it can be deferred until disposal for five or ten tax periods respectively, against a 50% advance and a guarantee, and is not due on assets not disposed of within that period. Applies to losses of residence effective from 1 January 2027; permanent.",
+   "refs": [
+    "A17-p1",
+    "A17-p2"
+   ],
+   "fiscal_rows": [
+    "F0110",
+    "F0111"
+   ],
+   "seed": "summary_table",
+   "lineage": {
+    "merged_from": [],
+    "split_from": null,
+    "note": "Seeded from F0110 (revenue) and F0111 (refunds; same label with the suffix 'rimborsi'), summary table p. 426, both citing Article 17(1). The Technical Report quantifies them as one measure: advance payments from 2027 and refunds of about half of the advances from 2032, after the five-year deferral period for transfers within the EU, so F0111 is blank in 2027-2029 (AC 3174, Tomo I, pp. 235-236). Refs extended to paragraph 2, the application date, which together with the 180-day payment term explains the lower 2027 value (Technical Report, p. 236). Content from the bill text (Article 307-bis(1)-(8)), the explanatory report (pp. 97-99) and the dossier (vol. I, pp. 87-92). See U014 and U019."
+   },
+   "thematic": null,
+   "ministry": null,
+   "relevance": null,
+   "low_priority": null,
+   "csr": null,
+   "profile": null
+  },
+  {
+   "law_id": "lb-2027",
+   "id": "M012",
+   "title_en": "Temporary three-point IRES surtax increase for banks, other financial intermediaries and insurers (2027-2028)",
+   "description_en": "For the two tax periods following the one in progress at 31 December 2026 (2027 and 2028), raises corporate income tax (IRES) on the financial sector by three percentage points through new Article 362-bis of the consolidated income tax act (Legislative Decree 117/2026). For financial intermediaries and the Bank of Italy, the existing surtax under Article 86(2) rises from 3.5% to 6.5% (total rate 30.5%); SIMs and SGRs remain outside the surtax and e-money institutions are excluded from the increase. Companies and entities carrying on insurance business (Article 120) pay a new three-point surtax (total rate 27%). A deduction of EUR 200,000 applies up to the additional tax. Deferred tax assets recorded as a result of the higher rates cannot be converted into tax credits and are disregarded for the DTA fee. The 2027 advance payment is calculated on the previous year's tax recalculated under the new rates.",
+   "refs": [
+    "A18-p1"
+   ],
+   "fiscal_rows": [
+    "F0112",
+    "F0113"
+   ],
+   "seed": "merge",
+   "lineage": {
+    "merged_from": [],
+    "split_from": null,
+    "note": "Merged at seeding (no ID assigned or retired): F0112 (financial intermediaries and Bank of Italy, Article 86(2); summary table p. 426) and F0113 (insurance and reinsurance companies, Article 86(1); p. 427), both citing Article 18(1). Both rows derive from one new article (362-bis) that applies the same three-point increase for the same two tax periods, with common rules on deferred tax assets, the EUR 200,000 deduction and the advance (paragraphs 4-6); paragraph 3 (group taxation and transparency) applies only to the insurers' surtax under paragraph 2. The Technical Report quantifies the two groups separately and adds them into the effects of the provision, EUR 783.7 million in 2027 and 694.6 million in 2028 (AC 3174, Tomo I, p. 237); the dossier presents paragraph 1 as one surtax for the financial and insurance sectors (vol. I, pp. 93-94). Unlike Article 4 (M004-M007), the two groups are not set out in separate articles; they differ in taxpayers and in the rate to which the three points are added (Article 86(2) surtax; Article 86(1) rate). Rates and scope from the explanatory report (pp. 99-101), the Technical Report (p. 237) and the dossier (vol. I, pp. 93-103). See U015."
+   },
+   "thematic": null,
+   "ministry": null,
+   "relevance": null,
+   "low_priority": null,
+   "csr": null,
+   "profile": null
+  },
+  {
+   "law_id": "lb-2027",
+   "id": "M013",
+   "title_en": "Tax on life-insurance mathematical reserves: higher ceiling on the accumulated tax credit",
+   "description_en": "Raises from 1.25% to 1.285% of the life-insurance mathematical reserves recorded in the financial statements the ceiling that limits the annual tax on those reserves (imposta sulle riserve matematiche dei rami vita), by amending Article 52(1) of the consolidated act on tax payments and collection (Legislative Decree 33/2025) for 2026 and subsequent years. Insurers pay the tax, at 0.50% of the reserves, with the income tax balance; it generates a tax credit used against the withholding tax on life-insurance yields and the substitute tax under Article 51 of Legislative Decree 33/2025, and where the unused credit plus the tax due exceeds the ceiling, the tax due is reduced accordingly. According to the Technical Report, the higher ceiling applies to the tax on reserves recorded in the 2026 financial statements and following years, paid from 2027, and increases insurers' payments. Permanent.",
+   "refs": [
+    "A18-p2"
+   ],
+   "fiscal_rows": [
+    "F0114"
+   ],
+   "seed": "summary_table",
+   "lineage": {
+    "merged_from": [],
+    "split_from": null,
+    "note": "Seeded from F0114 (summary table, p. 427), which cites Article 18(2). Kept separate from M012: different tax, legal basis (Article 52(1) of Legislative Decree 33/2025), taxpayers (insurers with life business) and duration (permanent). Mechanism and timing from the Technical Report, which imputes the effects to the year after that of the reserves because the tax is paid with the income tax balance (AC 3174, Tomo I, p. 238), the explanatory report (p. 101) and the dossier (vol. I, pp. 103-105)."
+   },
+   "thematic": null,
+   "ministry": null,
+   "relevance": null,
+   "low_priority": null,
+   "csr": null,
+   "profile": null
+  },
+  {
+   "law_id": "lb-2027",
+   "id": "M014",
+   "title_en": "IRAP: deductible share of administrative expenses and depreciation cut from 90% to 30% for banks and insurers",
+   "description_en": "Reduces from 90% to 30% the share of other administrative expenses and of depreciation of tangible and intangible operating assets that is deductible from the base of the regional tax on productive activities (IRAP) of banks and other financial intermediaries (Article 6(1) of Legislative Decree 446/1997) and of insurance companies (Article 7(1)); SIMs, SGRs and SICAVs (Article 6(2)-(4)) keep the 90% deduction. From the 2027 tax period, a deduction from tax (detrazione) of EUR 90,000 applies for each tax period, up to the additional IRAP resulting from the change. The 2027 advance payment is calculated on the previous year's tax recalculated under the new rules (paragraph 4). Permanent. The higher IRAP paid partly reduces IRES revenue, as IRAP is partly deductible from IRES (Technical Report).",
+   "refs": [
+    "A19-p1",
+    "A19-p2",
+    "A19-p4"
+   ],
+   "fiscal_rows": [
+    "F0115",
+    "F0116",
+    "F0117"
+   ],
+   "seed": "summary_table",
+   "lineage": {
+    "merged_from": [],
+    "split_from": null,
+    "note": "Seeded from F0115-F0117 (summary table, p. 427), which cite Article 19(1)-(2): the IRAP effect on the borrowing requirement and net borrowing (F0115), its counterpart in the net balance to be financed, recorded on the expenditure side (F0116, as F0013 in M004; see U001), and the induced IRES loss (F0117). The Technical Report quantifies banks and insurers separately and gives their total, which matches the rows (AC 3174, Tomo I, pp. 238-241); the summary table does not split the two sectors. Refs extended to paragraph 4 (advance payments), whose effect the Technical Report includes from 2027 (p. 240). Scope and exclusions from the explanatory report (pp. 101-102) and the dossier (vol. I, pp. 106-111). See U016 and U019."
+   },
+   "thematic": null,
+   "ministry": null,
+   "relevance": null,
+   "low_priority": null,
+   "csr": null,
+   "profile": null
+  },
+  {
+   "law_id": "lb-2027",
+   "id": "M015",
+   "title_en": "Advertising expenses of financial intermediaries and energy companies deductible over three years",
+   "description_en": "Provides that advertising expenses, and expenses for services of similar content, incurred by financial intermediaries (excluding e-money institutions) and by companies mainly carrying on the energy activities listed in Table 1 annexed to Decree-Law 21/2026 (ATECO codes 06, 09.1, 19.2, 35.1, 35.2, 35.4 and 49.50.1: oil and gas extraction, refining, electricity, gas, energy intermediation and gas pipeline transport) are deductible in equal instalments in the tax period in which they are incurred and in the following two, by inserting paragraph 17-bis in Article 118 of the consolidated income tax act (Legislative Decree 117/2026). According to the explanatory report, the rule defers the deduction without reducing the total deductible amount. Applies from the 2027 tax period, including its IRES advance payment (paragraph 4). Permanent.",
+   "refs": [
+    "A19-p3",
+    "A19-p4"
+   ],
+   "fiscal_rows": [
+    "F0118",
+    "F0119"
+   ],
+   "seed": "merge",
+   "lineage": {
+    "merged_from": [],
+    "split_from": null,
+    "note": "Merged at seeding (no ID assigned or retired): F0118 (financial intermediaries) and F0119 (energy sector), both citing Article 19(3) (summary table, p. 427). Both derive from the single new paragraph 17-bis of Article 118, which applies the same rule to both groups; the Technical Report quantifies each group and then gives the overall cash effects 'of the measure' (AC 3174, Tomo I, pp. 241-242). Refs extended to paragraph 4, under which the effects already arise on the 2027 advance (Technical Report, pp. 241-242; dossier, vol. I, p. 114). The energy perimeter of Table 1 to Decree-Law 21/2026 includes refining (ATECO 19.2) and is therefore wider than that of the IRAP increase in Article 21 (Annex 2 to the bill), which excludes it (dossier, vol. I, p. 131). See U017 and U019. ATECO codes from the explanatory report (p. 102) and the dossier (vol. I, pp. 112-113); the bill text refers only to Table 1 annexed to Decree-Law 21/2026."
+   },
+   "thematic": null,
+   "ministry": null,
+   "relevance": null,
+   "low_priority": null,
+   "csr": null,
+   "profile": null
+  },
+  {
+   "law_id": "lb-2027",
+   "id": "M016",
+   "title_en": "Interest expense of financial intermediaries: deductible share for 2027 cut from 97% to 96%",
+   "description_en": "Reduces from 97% to 96% the share of interest expense that financial intermediaries may deduct for IRES and IRAP in the tax period following the one in progress at 31 December 2026 (2027), by amending Article 105(16)(b) of the consolidated income tax act (Legislative Decree 117/2026). The temporary limits in Article 105(16) apply to financial intermediaries other than insurance companies, parent companies of insurance groups, SGRs and SIMs; under the general rule, the intermediaries concerned deduct interest expense in full; the limits for 2026 (96%), 2028 (98%) and 2029 (99%) are unchanged. The change does not affect the 2027 advance payment and therefore takes effect at the balance payment in 2028 (Technical Report). Applies to the 2027 tax period only.",
+   "refs": [
+    "A19-p5"
+   ],
+   "fiscal_rows": [
+    "F0120",
+    "F0121",
+    "F0122"
+   ],
+   "seed": "summary_table",
+   "lineage": {
+    "merged_from": [],
+    "split_from": null,
+    "note": "Seeded from F0120 (IRES), F0121 (IRAP) and F0122 (IRAP counterpart in the net balance to be financed, expenditure side), summary table pp. 427-428, which cite Article 19(5). Kept separate from M014 and M015: different item (interest expense, for both IRES and IRAP), legal basis (Article 105(16)(b)) and duration (one tax period). The Technical Report states that the reduction applies to the 2027 tax year and acts only on the balance payment, hence effects in 2028 only (AC 3174, Tomo I, p. 242); the dossier sets out the schedule of temporary limits in Article 105(16) and the advance rule in Article 105(17) (vol. I, pp. 111 and 114-115)."
+   },
+   "thematic": null,
+   "ministry": null,
+   "relevance": null,
+   "low_priority": null,
+   "csr": null,
+   "profile": null
+  },
+  {
+   "law_id": "lb-2027",
+   "id": "M017",
+   "title_en": "Deferral of 2027 deductions of DTA-related items (loan losses, goodwill, IFRS 9) and lower cap on offsetting losses and ACE surplus",
+   "description_en": "Defers in full to the 2028 and 2029 tax periods, in equal instalments, the quotas deductible for IRES and IRAP in the 2027 tax period of three groups of negative components linked to deferred tax assets, which concern mainly financial intermediaries and insurance companies, by amending Article 362(12)-(14) of the consolidated income tax act (Legislative Decree 117/2026): (a) the stock of write-downs and losses on loans to customers not deducted up to 2015 (6.32%, instead of the 3.80% deferred under current law); (b) the amortisation of goodwill and other intangible assets not yet deducted (20.58% instead of 12.36%); (c) negative components arising on first-time adoption of IFRS 9 (15.83% instead of 9.50%). It also lowers from 42% to 25% the share of the higher 2027 IRES taxable income resulting from these deferrals against which prior tax losses and ACE surpluses may be offset (Article 362(15)(b)), for individual taxpayers and tax groups. The deferral applies from the 2027 advance payment.",
+   "refs": [
+    "A20-p1"
+   ],
+   "fiscal_rows": [
+    "F0123",
+    "F0124",
+    "F0125"
+   ],
+   "seed": "summary_table",
+   "lineage": {
+    "merged_from": [],
+    "split_from": null,
+    "note": "Seeded from F0123 (IRES), F0124 (IRAP) and F0125 (IRAP counterpart in the net balance to be financed, expenditure side), summary table p. 428, which cite Article 20(1). The rows cover both the deferral (letters a-c) and the lower cap (letter d) and match the Technical Report's table that includes the cap (AC 3174, Tomo I, p. 244); they cannot be split by component, and the cap applies only to the higher income created by the deferrals, so one measure. Quotas from the bill text, the Technical Report (pp. 242-244) and the dossier (vol. I, pp. 116-127); see also the explanatory report (pp. 102-103). See U018."
+   },
+   "thematic": null,
+   "ministry": null,
+   "relevance": null,
+   "low_priority": null,
+   "csr": null,
+   "profile": null
   }
  ],
  "fiscal_rows": [
@@ -12919,8 +13149,8 @@
      "2029": 1380.0
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M009",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -12956,8 +13186,8 @@
      "2029": 21.5
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M010",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -12993,8 +13223,8 @@
      "2029": 6.7
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M011",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13030,8 +13260,8 @@
      "2029": null
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M011",
+   "match_status": "matched",
    "note": "E/S=S; Natura=C"
   },
   {
@@ -13067,8 +13297,8 @@
      "2029": null
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M012",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13104,8 +13334,8 @@
      "2029": null
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M012",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13141,8 +13371,8 @@
      "2029": 3.7
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M013",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13179,8 +13409,8 @@
      "2029": 1216.9
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M014",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13217,8 +13447,8 @@
      "2029": null
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M014",
+   "match_status": "matched",
    "note": "E/S=S; Natura=C"
   },
   {
@@ -13255,8 +13485,8 @@
      "2029": -25.1
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M014",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13292,8 +13522,8 @@
      "2029": 4.7
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M015",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13329,8 +13559,8 @@
      "2029": 1.7
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M015",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13366,8 +13596,8 @@
      "2029": null
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M016",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13403,8 +13633,8 @@
      "2029": null
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M016",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13440,8 +13670,8 @@
      "2029": null
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M016",
+   "match_status": "matched",
    "note": "E/S=S; Natura=C"
   },
   {
@@ -13477,8 +13707,8 @@
      "2029": -386.3
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M017",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13514,8 +13744,8 @@
      "2029": -47.7
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M017",
+   "match_status": "matched",
    "note": "E/S=E; Natura=T"
   },
   {
@@ -13551,8 +13781,8 @@
      "2029": null
     }
    },
-   "measure": null,
-   "match_status": "unmatched",
+   "measure": "M017",
+   "match_status": "matched",
    "note": "E/S=S; Natura=C"
   },
   {
@@ -24114,6 +24344,110 @@
    "id": "U011",
    "stage": "b2",
    "text": "Measure boundaries and descriptions (M001-M008) also rely on the explanatory report (pp. 85-89) and the Technical Report (pp. 213-221) of AC 3174, Tomo I (work/tomo1.txt, the volume that also contains S3). These documents are not registered in sources; registering them would make the page references in the measure lineage notes traceable.",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U012",
+   "stage": "b2",
+   "text": "Article 15 (M009): paragraph 1(b), which doubles the rate of the high-frequency trading tax (Article 46(1) of Legislative Decree 174/2024, from 0.04% to 0.08%), has no summary-table row and no quantification. It was kept in M009 rather than made a separate measure with no fiscal rows, although its legal basis differs from that of paragraph 1(a) (Article 42(1)): the explanatory report presents the two changes as one intervention, the second keeping a consistent ratio between types of transaction (AC 3174, Tomo I, pp. 96-97). The Technical Report quantifies the article only on the 2026 revenue forecast for the tax on share transfers (tax code 4058), setting the additional revenue at 100% of that forecast, and does not discuss behavioural effects (p. 234); the dossier attributes the revenue to the increase from 0.4% to 0.8% (vol. I, p. 82). The label of F0108 also refers to the halving of the rate on regulated markets and multilateral trading facilities, which the bill does not amend; the dossier describes it as an existing rule (vol. I, p. 84). If the high-frequency trading tax must be tracked separately, paragraph 1(b) can be split from M009 as a text-only measure.",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U013",
+   "stage": "b2",
+   "text": "Article 16 (M010): (i) the label of F0109 cites Article 153(2)-(5) of Legislative Decree 117/2026, whereas the bill amends only the first sentence of Article 153(2); the label appears to cite the provisions of the relief as a whole. (ii) The dossier describes EUR 16.1 million (2027) and 21.5 million (from 2028) as accrual-basis revenue (vol. I, p. 86), whereas the Technical Report estimates about EUR 21.5 million a year on an accrual basis and presents the 2027 value of 16.1 as reflecting a 75% IRES advance (AC 3174, Tomo I, p. 235). M010 follows the bill text and the Technical Report.",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U014",
+   "stage": "b2",
+   "text": "Article 17 (M011): (i) F0111 (refunds) is blank in 2027-2029, consistent with the Technical Report, which places refunds of about EUR 3.37 million a year from 2032, after the five-year deferral period for transfers to EU Member States (AC 3174, Tomo I, p. 236); see also U002. (ii) The Technical Report states a rate of 26% (p. 235), whereas new Article 307-bis(1) taxes the income under the provisions ordinarily applicable to each type of income without stating a rate; M011 attributes the 26% to the Technical Report. (iii) The dossier notes that Article 307-bis(1) covers the income under Article 76(1)(d) to (i), whereas paragraph 3 determines the base by reference to Article 77(7), which concerns only the capital gains under Article 76(1)(d) to (f) (vol. I, p. 89); how the base is determined for the other income is not stated. (iv) The Technical Report quantifies only the advance payments and the refunds; it does not estimate the balance due on later disposals by taxpayers who opt for deferral (p. 236).",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U015",
+   "stage": "b2",
+   "text": "Article 18(1) (M012): judgement call. F0112 (increase from 3.5% to 6.5% of the existing surtax for financial intermediaries and the Bank of Italy, Article 86(2)) and F0113 (new three-point surtax for insurance and reinsurance companies, Article 86(1)) were merged into one measure: both are set by the same new Article 362-bis, with the same increase, the same two tax periods and common rules (paragraphs 4-6; paragraph 3 concerns only the insurers' surtax); the Technical Report adds them into the effects of the provision (AC 3174, Tomo I, p. 237), and the dossier presents them as one surtax, observing that the heading of Article 362-bis does not mention the insurance sector (vol. I, pp. 93-94). If the two groups of taxpayers must be tracked separately, M012 can be split along F0112 and F0113, with A18-p1 referenced by both. Related points: (i) the Technical Report attributes to Article 18 the renaming of Chapter I and the deletion of Chapters II-IV of Part IV, Title I, of Legislative Decree 117/2026 (p. 237); in the bill text these changes are made by Article 11(1)(a) and (c), to which Article 18(1)(a) refers. No effect on the quantification. (ii) Article 362-bis(6) adjusts only the advance for the 2027 tax period, while the explanatory report states that the same rule applies to the 2028 advance (pp. 100-101); the dossier suggests stating this in the text (vol. I, p. 103). Whether the Technical Report's 2028 values assume it is not stated.",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U016",
+   "stage": "b2",
+   "text": "Article 19(1)-(2) (M014): the sources differ on the duration of the EUR 90,000 deduction. Paragraph 2 grants it for each tax period from the one following that in progress at 31 December 2026, and the dossier reads it in the same way (vol. I, pp. 106 and 111); the explanatory report limits it to that tax period and the following one, i.e. 2027 and 2028 (AC 3174, Tomo I, p. 102). The Technical Report mentions the deduction without a duration, quantifies the measure from 2029 onwards and attributes the lower yield from 2029 only to the end of the 2-point IRAP surcharge applying in 2027-2028 (pp. 239-240). M014 follows the bill text.",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U017",
+   "stage": "b2",
+   "text": "Article 19(3) (M015): judgement call. F0118 (financial intermediaries) and F0119 (energy sector) were merged into one measure because both derive from the single new paragraph 17-bis of Article 118 of Legislative Decree 117/2026, which applies the same three-year spreading to both groups; the Technical Report quantifies each group and then gives the overall cash effects of the measure (AC 3174, Tomo I, pp. 241-242). If the two sectors must be tracked separately, M015 can be split along F0118 and F0119, with A19-p3 and A19-p4 referenced by both. The bill text sets no start date; the explanatory report (p. 102), the Technical Report (p. 241) and both row labels place it from the 2027 tax period.",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U018",
+   "stage": "b2",
+   "text": "Article 20 (M017): (i) the rows combine the deferral of the 2027 quotas (paragraph 1(a)-(c)) and the reduction from 42% to 25% of the cap on offsetting prior losses and ACE surplus (paragraph 1(d)). The Technical Report gives an IRES effect of EUR 772.7 million in 2027 for the deferral alone and 1,978.5 million including the cap, with about -386.3 million in each of 2029 and 2030 in both cases (AC 3174, Tomo I, p. 244): it shows no later effect of the cap up to 2031 and does not say when the losses and ACE surplus not offset in 2027 are used. The rows cannot be split, so the two components form one measure. (ii) The explanatory report and the Technical Report refer to goodwill and intangible amortisation not deducted up to the period in progress at 31 December 2018 (pp. 102 and 243), the dossier to 31 December 2017 (vol. I, pp. 120-121); M017 does not state the year. (iii) The row labels refer to financial-sector entities ('enti del settore finanziario'), whereas Article 20 does not name the taxpayers; according to the dossier the deferrals apply to financial intermediaries and insurance companies, the goodwill component mainly (vol. I, pp. 116 and 120-121).",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U019",
+   "stage": "b2",
+   "text": "Paragraphs with no summary-table row were attached to the measure they implement rather than made measures of their own: Article 16(2) (advance payment for the 2027 tax period) to M010; Article 17(2) (application to losses of residence effective from 1 January 2027) to M011; Article 19(4) (advance payments for the 2027 tax period under paragraphs 1 to 3) to both M014 and M015, as A4-p1 is referenced by M004-M007. Their effects are included in the values of those measures: the Technical Report computes the 2027 values with the advances (AC 3174, Tomo I, pp. 235, 240 and 241-242) and the 2027 exit-tax revenue from the application date and the 180-day payment term (p. 236). The explanatory report describes Article 19(4) as concerning only the IRAP advance (p. 102), whereas the text refers to paragraphs 1, 2 and 3, and the Technical Report and the dossier also apply it to the IRES advance for advertising expenses (pp. 241-242; vol. I, p. 114).",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U020",
+   "stage": "b2",
+   "text": "Data defect in lb-2027.json (stage b1), not corrected in this batch: the row_label_it of F0113 is out of order ('... con detrazione pari a 117/2026 - IRES 200.000 euro sull’imposta determinata dall’incremento, di cui all'art. 86, c. 1, del D.Lgs.'). The printed summary table reads '... con detrazione pari a 200.000 euro sull’imposta determinata dall’incremento, di cui all'art. 86, c. 1, del D.Lgs. 117/2026 - IRES' (AC 3174, Tomo I, p. 427). The values of F0113 match the source.",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U021",
+   "stage": "b2",
+   "text": "The lineage notes of M009-M017 and items U012-U020 cite the joint research dossier of the Senate and Chamber research services, 'Legge di bilancio 2027 - A.C. 3174-bis', Volume I (Articles 1-75), 9 November 2026 (Senate dossier no. 793; Chamber 'Progetti di legge' no. 689; work file ID0016vol1), by printed page number (PDF page = printed page + 3). The dossier is not registered in sources; registering it (kind 'dossier') would make these references traceable. References to AC 3174, Tomo I (explanatory report, Technical Report, summary table) are also printed page numbers (PDF page = printed page + 4).",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U022",
+   "stage": "b2",
+   "text": "Fiscal profile of M013 and M015: both legal changes are permanent, but the Technical Report effects are transitory (M013: 258.0 in 2027, then 9.8, 3.7 and 0.0 from 2030, TR p. 238; M015: nil from 2030, TR p. 242). The TR does not explain the profile. At the classification stage, profile.duration should distinguish legal duration from fiscal effect.",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U023",
+   "stage": "b2",
+   "text": "Quantification perimeter narrower than the legal scope: M011 (the TR estimate uses only household financial wealth and ISTAT emigration data, with no estimate for simple partnerships and non-commercial entities under Article 307-bis(7); TR p. 236) and M015 (the estimate for financial intermediaries rests on the main banking groups' accounts and banking-sector operating costs; TR p. 241). To be considered in the beneficiaries and relevance notes.",
+   "raised": "23/11/2026",
+   "resolved": null,
+   "resolution": null
+  },
+  {
+   "id": "U024",
+   "stage": "b2",
+   "text": "Blank cells where the Technical Report prints 0.0 (TR pp. 236-244): F0111 (2027-2029), F0112/F0113 (2029), F0117 (2027), F0120-F0122 (2027, 2029) and F0123-F0125 (2028). Under the schema they are correctly blank (values come only from the summary table); Fiscal_effects will show blanks, not zeros, for M012 2029, M016 2027 and 2029, and M017 2028. A README or QA note should tell the model user these are not missing data.",
    "raised": "23/11/2026",
    "resolved": null,
    "resolution": null
