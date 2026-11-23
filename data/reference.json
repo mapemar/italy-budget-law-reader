@@ -147,56 +147,287 @@
   {"id": "competence_inferred", "definition": "Neither of the above; the competent ministry follows from the subject matter and the legislation cited. Confidence is capped at medium and the rationale cites the legal basis."}
  ],
  "csr_framework": {
-  "status": "loaded (recommendations); subcategories pending approval",
+  "status": "loaded",
   "year": 2026,
   "source": {
    "label": "Council Recommendation on the economic, social, employment, structural and budgetary policies of Italy (2026 CSRs)",
    "provided_by": "User, in the Project (file 'CSR 2026.pdf')",
    "date": "03/07/2026",
-   "note": "Council of the EU document 11124/26 (ECOFIN 914), 'Council Recommendation on the economic, social, employment, structural and budgetary policies of Italy', based on COM(2026) 212 final. Operative text (recommendations 1-6) loaded programmatically from the PDF, pp. 29-31, verbatim apart from line-break and hyphenation normalisation. Titles and subcategories are not part of the source and are left empty until proposed and approved."
+   "note": "Council of the EU document 11124/26 (ECOFIN 914), 'Council Recommendation on the economic, social, employment, structural and budgetary policies of Italy', based on COM(2026) 212 final. Operative text (recommendations 1-6) loaded programmatically from the PDF, pp. 29-31, verbatim apart from line-break and hyphenation normalisation. Titles and subcategories are not part of the source: they are an analytical structure proposed by the policy analyst (work/csr_subcategories_proposal.md) and approved by the user on 23/11/2026; each is anchored to words of the operative text."
   },
   "recommendations": [
    {
     "id": "CSR2026-1",
     "number": 1,
-    "title": null,
+    "title": "Public finances, taxation and demographic challenges",
     "text": "Ensure that net expenditure respects the corrective path recommended by the Council on 21 January 2025 given the deviation recorded by 2025 by the Commission vis-à-vis the recommended net expenditure ceiling. Reinforce overall defence and security spending and readiness, while ensuring debt sustainability and spending efficiency, as well as gradually adapting the budget to sustain structurally higher defence spending. Ensure that measures taken to mitigate the impact of the hike in energy prices are temporary, targeted at protecting vulnerable households or at addressing the needs of energy-intensive firms, preserve incentives for energy savings and that their fiscal cost is compatible with the commitments under the EU fiscal framework. Continue to implement the set of reforms and investments underpinning the extended adjustment period as recommended by the Council on 21 January 2025. In line with fiscal sustainability objectives, make the tax system more conducive to sustainable growth, while ensuring fairness, including by further fighting tax evasion and reducing remaining tax expenditures, including those related to value added tax and environmentally harmful subsidies. Update cadastral values, building on the medium-term fiscal-structural plan commitment, as part of a broader review of housing-related policies. Step up efforts to improve the efficiency and effectiveness of public expenditure. Address demographic challenges to mitigate the effects on potential growth and on the sustainability of the pension system, also by attracting and retaining high-quality workforce, and by encouraging older workforce participation especially in the South.",
-    "subcategories": []
+    "subcategories": [
+     {
+      "id": "CSR2026-1.1",
+      "label": "Net expenditure path",
+      "scope": "Compliance of net expenditure with the corrective path recommended by the Council on 21 January 2025, given the deviation recorded by 2025. Covers provisions whose main content is aggregate fiscal control or the financing of the bill rather than a specific policy."
+     },
+     {
+      "id": "CSR2026-1.2",
+      "label": "Defence and security spending",
+      "scope": "Higher defence and security spending and readiness, and the gradual adaptation of the budget to sustain structurally higher defence spending while ensuring debt sustainability and spending efficiency."
+     },
+     {
+      "id": "CSR2026-1.3",
+      "label": "Energy-price support measures",
+      "scope": "Measures mitigating the impact of higher energy prices on households and firms, assessed against the conditions in the text: temporary, targeted at vulnerable households or energy-intensive firms, preserving incentives for energy savings, and with a fiscal cost compatible with the EU fiscal framework."
+     },
+     {
+      "id": "CSR2026-1.4",
+      "label": "Reforms and investments underpinning the extended adjustment period",
+      "scope": "Implementation, on the agreed timeline, of the reforms and investments specified in the Council Recommendation of 21 January 2025 endorsing the medium-term fiscal-structural plan, which underpin the extension of the adjustment period to seven years."
+     },
+     {
+      "id": "CSR2026-1.5",
+      "label": "Tax structure: growth and fairness",
+      "scope": "Design of the tax system: shift of the tax burden from labour to other sources less detrimental to growth, rates, brackets and progressivity, special regimes and temporary flat-rate taxation, and vehicle taxation reflecting CO2 emissions."
+     },
+     {
+      "id": "CSR2026-1.6",
+      "label": "Tax evasion and compliance",
+      "scope": "Prevention and detection of tax evasion, particularly in VAT and among the self-employed, and measures that affect compliance incentives, including measures similar to tax amnesties, which recital 19 considers at risk of being counter-productive."
+     },
+     {
+      "id": "CSR2026-1.7",
+      "label": "Tax expenditures and environmentally harmful subsidies",
+      "scope": "Creation, extension, reduction or removal of specific tax reliefs (deductions, credits, exemptions, reduced VAT or excise rates) and of environmentally harmful subsidies, including tax benefits for endothermic company cars."
+     },
+     {
+      "id": "CSR2026-1.8",
+      "label": "Cadastral values and housing-related policies",
+      "scope": "Update of cadastral values and recurrent property taxation, within a broader review of housing-related policies: affordability and rents, social and public housing, unoccupied dwellings and short-term rentals, governance and structural funding of housing policy."
+     },
+     {
+      "id": "CSR2026-1.9",
+      "label": "Efficiency and effectiveness of public expenditure",
+      "scope": "Spending evaluation and review, including implementation of the Spending Analysis and Evaluation Plans and policy action based on their results."
+     },
+     {
+      "id": "CSR2026-1.10",
+      "label": "Pension sustainability and older workforce participation",
+      "scope": "Pension expenditure and rules (link between retirement age and life expectancy, early-retirement schemes, indexation, supplementary pension schemes) and measures keeping older workers in employment, such as flexible working arrangements and age-specific management policies, especially in the South. Recital 22 presents the two as complementary."
+     },
+     {
+      "id": "CSR2026-1.11",
+      "label": "Demographic challenges and high-quality workforce",
+      "scope": "Measures responding to demographic decline and its effect on potential growth: attraction and retention of highly qualified workers, including against brain drain and through well-managed legal migration, and support for parenting presented as a response to low fertility (recital 22 calls for moving beyond financial incentives)."
+     }
+    ]
    },
    {
     "id": "CSR2026-2",
     "number": 2,
-    "title": null,
+    "title": "RRF continuity and cohesion policy implementation",
     "text": "Ensure continuity of reforms and investments implemented under the Recovery and Resilience Facility. Accelerate efforts to implement cohesion policy programmes, building, where appropriate, on the reallocation to strategic priorities and flexibilities agreed in the context of the mid-term review of the cohesion policy framework.",
-    "subcategories": []
+    "subcategories": [
+     {
+      "id": "CSR2026-2.1",
+      "label": "Continuity of RRF reforms and investments",
+      "scope": "Sustaining and building on the reforms and investments implemented under the RRF as the Facility ends, including keeping RRF-funded reforms, projects and services in place after RRF financing."
+     },
+     {
+      "id": "CSR2026-2.2",
+      "label": "Implementation of cohesion policy programmes",
+      "scope": "Faster and more effective implementation of cohesion policy programmes (ERDF, ESF+, JTF): project selection and payments, coordination between levels of government, timely use of JTF resources and rapid deployment of the investments identified in the mid-term review."
+     }
+    ]
    },
    {
     "id": "CSR2026-3",
     "number": 3,
-    "title": null,
+    "title": "Research, innovation, capital markets and industrial strategy",
     "text": "Support research and innovation, including by strengthening innovation procurement, increasing universities' focus on the commercialisation of research and researchers' career. Promote the mobilization of savings, capital markets' expansion, and firms' growth and aggregation, including by supporting the role of corporate and institutional investors in venture capital and private equity, as well as by facilitating new listings and issuance of corporate bonds. Implement an industrial strategy with the aim to also reduce territorial disparities, by streamlining current policy measures and taking into account key infrastructure projects.",
-    "subcategories": []
+    "subcategories": [
+     {
+      "id": "CSR2026-3.1",
+      "label": "Support for research and innovation",
+      "scope": "Public funding of research and public support for business R&D and innovation, including a more strategic allocation of resources and public-private collaboration."
+     },
+     {
+      "id": "CSR2026-3.2",
+      "label": "Innovation procurement",
+      "scope": "Public procurement of innovative solutions, to develop markets for start-ups while making public expenditure more efficient; recital 26 notes that it is currently limited to the defence and green sectors."
+     },
+     {
+      "id": "CSR2026-3.3",
+      "label": "Commercialisation of research",
+      "scope": "Research valorisation and technology transfer by universities and research bodies, including incentives for these activities and the human and financial resources of technology transfer offices."
+     },
+     {
+      "id": "CSR2026-3.4",
+      "label": "Researchers' careers",
+      "scope": "Recruitment planning, contract types and career progression of researchers, including extraordinary recruitment plans and permanent positions."
+     },
+     {
+      "id": "CSR2026-3.5",
+      "label": "Savings mobilisation and capital markets",
+      "scope": "Channelling domestic savings to firms through capital markets: equity listings and corporate bond issuance, market depth and liquidity, longer-horizon investment by institutional investors, and refocusing of guarantee schemes and incentives towards capital-market instruments."
+     },
+     {
+      "id": "CSR2026-3.6",
+      "label": "Venture capital and private equity",
+      "scope": "Development of venture capital and private equity, concentrating public effort on early-stage and riskier segments and on attracting institutional and corporate investors, including through financial instruments and fund-of-fund structures with de-risking elements."
+     },
+     {
+      "id": "CSR2026-3.7",
+      "label": "Firms' growth and aggregation",
+      "scope": "Removal of regulatory and tax barriers to firm growth and consolidation, scale-up of start-ups, aggregation of SMEs, external professional managers and upskilling of managers."
+     },
+     {
+      "id": "CSR2026-3.8",
+      "label": "Industrial strategy and streamlining of incentives",
+      "scope": "An innovation-driven industrial strategy steering resources towards high value-added sectors and the development of the South, with a governance structure, and the rationalisation and stabilisation of national and regional business incentives, including resources earmarked for the South."
+     },
+     {
+      "id": "CSR2026-3.9",
+      "label": "Key infrastructure projects",
+      "scope": "Infrastructure linked to the industrial strategy and to the North-South gap: completion of large-scale RRP and cohesion projects, access to industrial zones, last-mile connectivity, road and port infrastructure, multimodal logistic nodes and a multi-annual multimodal Transport Strategy."
+     }
+    ]
    },
    {
     "id": "CSR2026-4",
     "number": 4,
-    "title": null,
+    "title": "Public administration, justice and competition",
     "text": "Further increase the effectiveness of the public administration and further strengthen administrative capacity, particularly at local level and in the South. Further reduce the backlog and disposition time of the justice system. Address remaining restrictions to competition, including in the transport and electricity sectors and tackle remaining barriers to free movement of goods.",
-    "subcategories": []
+    "subcategories": [
+     {
+      "id": "CSR2026-4.1",
+      "label": "Effectiveness of the public administration",
+      "scope": "Human resources management of public servants (recruitment, training, performance evaluation, mobility, career progression, upskilling and reskilling), interoperability and take-up of digital platforms, and simplification and streamlining of administrative processes, mainly at central level."
+     },
+     {
+      "id": "CSR2026-4.2",
+      "label": "Administrative capacity at local level and in the South",
+      "scope": "Capacity of regional and local administrations, particularly in the South and in smaller municipalities (digitalisation, decision-making, public financial management), through an overarching capacity strategy, targeted central support to less-resourced regions and associations of smaller administrations."
+     },
+     {
+      "id": "CSR2026-4.3",
+      "label": "Justice system efficiency",
+      "scope": "Efficiency of civil, criminal, insolvency, tax and administrative justice: institutionalisation of the trial office, staffing of magistrates and court staff, full digitalisation, and measures reducing pressure on overburdened courts such as the Justice of Peace."
+     },
+     {
+      "id": "CSR2026-4.4",
+      "label": "Restrictions to competition",
+      "scope": "Competition for and in markets: competitive tendering of energy distribution concessions and of expiring concessions in other sectors, including regulated ones; pro-competitive reforms in railways, highways and ports; pro-competitive principles and open tenders in healthcare."
+     },
+     {
+      "id": "CSR2026-4.5",
+      "label": "Barriers to free movement of goods",
+      "scope": "National regulatory barriers to intra-EU trade in goods, such as national packaging and labelling rules that create compliance burdens."
+     }
+    ]
    },
    {
     "id": "CSR2026-5",
     "number": 5,
-    "title": null,
+    "title": "Electrification, renewables, climate risks, water and waste",
     "text": "Accelerate electrification and intensify efforts for the deployment of renewable energy and storage, including by fully implementing permitting reforms, particularly at sub-national level, and investing in the electricity grid. Continue to address climate-related risks and mitigate their economic impact, including through more institutional coordination, nature-based solutions and climate insurance coverage. Tackle remaining inefficiencies in water and waste management by reducing infrastructural gaps in particular in Southern regions.",
-    "subcategories": []
+    "subcategories": [
+     {
+      "id": "CSR2026-5.1",
+      "label": "Electrification",
+      "scope": "Electrification of energy use by households and industry, including the reduction and rationalisation of taxes and levies on electricity (including the 'oneri generali di sistema') to lessen the disincentive created by the electricity-to-gas price ratio."
+     },
+     {
+      "id": "CSR2026-5.2",
+      "label": "Renewable energy and storage",
+      "scope": "Deployment of renewable energy, storage and other non-fossil flexibility such as demand response, through support schemes and auctions and the full implementation of permitting reforms, including the 'Testo Unico' at regional level."
+     },
+     {
+      "id": "CSR2026-5.3",
+      "label": "Electricity grid investment",
+      "scope": "Transmission and distribution grid investment to integrate renewables and reduce congestion while limiting the impact on consumer bills, including cross-border interconnections and the reduction of connection delays."
+     },
+     {
+      "id": "CSR2026-5.4",
+      "label": "Climate-related risks and adaptation",
+      "scope": "Climate adaptation and reduction of hydrogeological risks: consolidated investment planning, coordination of adaptation governance across central and local authorities, nature-based solutions and land-use planning (including soil sealing), and mitigation of the economic impact of climate-related events."
+     },
+     {
+      "id": "CSR2026-5.5",
+      "label": "Climate insurance coverage",
+      "scope": "Closing the climate insurance protection gap with fair and affordable solutions, building on the mandatory insurance against natural disasters for companies."
+     },
+     {
+      "id": "CSR2026-5.6",
+      "label": "Water and waste management",
+      "scope": "Infrastructure and management of water services and waste, closing infrastructural gaps, in particular in southern regions."
+     }
+    ]
    },
    {
     "id": "CSR2026-6",
     "number": 6,
-    "title": null,
+    "title": "Labour market, skills, education, healthcare and social protection",
     "text": "Continue to promote job quality by further reducing labour market segmentation and supporting effective collective bargaining outcomes and adequate wages. Support labour market participation, including by improving active labour market policies and access to affordable and quality care services, taking into account territorial disparities. Keep-up the efforts to tackle undeclared work. Continue promoting VET and adult learning, including by strengthening in-work training and skills intelligence. Improve educational outcomes, focusing on basic skills, and the labour market relevance of tertiary education. Improve timely access to affordable healthcare, also by tackling shortages in key health professions. Continue to improve the coverage and adequacy of social protection as well as access to social services for people in vulnerable situations, notably children, while maintaining fiscal sustainability.",
-    "subcategories": []
+    "subcategories": [
+     {
+      "id": "CSR2026-6.1",
+      "label": "Labour market segmentation",
+      "scope": "Reducing the high share of fixed-term, temporary and involuntary part-time contracts, which disproportionately affect women, young people and migrants, and supporting transitions to permanent jobs."
+     },
+     {
+      "id": "CSR2026-6.2",
+      "label": "Collective bargaining and adequate wages",
+      "scope": "Wage adequacy and wage setting: timely renewal of collective agreements, second-level bargaining (particularly in SMEs and the South) and contractual dumping."
+     },
+     {
+      "id": "CSR2026-6.3",
+      "label": "Labour market participation and active labour market policies",
+      "scope": "Participation of under-represented groups, notably women and young people, taking account of territorial disparities: active labour market policies and better-targeted activation measures, sustainable financing of the integrated system of unemployment support, social services and training, and work-life balance measures supporting participation."
+     },
+     {
+      "id": "CSR2026-6.4",
+      "label": "Affordable and quality care services",
+      "scope": "Availability, quality and affordability of childcare and long-term care services, particularly in the regions with the lowest coverage."
+     },
+     {
+      "id": "CSR2026-6.5",
+      "label": "Undeclared work",
+      "scope": "Undeclared work and labour exploitation: effectiveness and capacity of the labour inspectorate, data-sharing and coordination among inspection bodies, targeted measures in the most affected sectors such as domestic work and agriculture, and regular employment and protection for exploited migrants."
+     },
+     {
+      "id": "CSR2026-6.6",
+      "label": "VET, adult learning and skills intelligence",
+      "scope": "Vocational education and training, adult learning and reskilling, in-work training, skills intelligence and forecasting, and the governance and quality assurance of training provision."
+     },
+     {
+      "id": "CSR2026-6.7",
+      "label": "Educational outcomes and basic skills",
+      "scope": "School learning outcomes and basic skills, including territorial and socio-economic gaps: targeted support to the worst-performing schools, full-time schooling, skills-based curricula, and the attractiveness of the teaching profession (stable employment of non-statutory teachers, salaries, professional development and mobility)."
+     },
+     {
+      "id": "CSR2026-6.8",
+      "label": "Labour market relevance of tertiary education",
+      "scope": "Tertiary attainment and graduates' employability: graduation times and dropout, funding linked to course evaluations and completion rates, secondary-to-tertiary guidance and STEM promotion (especially among women), transversal and work-oriented skills and internships."
+     },
+     {
+      "id": "CSR2026-6.9",
+      "label": "Timely access to affordable healthcare",
+      "scope": "Access to healthcare: waiting lists and their management, out-of-pocket costs, territorial disparities, completion and operation of the new territorial health facilities, interoperable digital health, telemedicine and home care, and equitable access in inner areas."
+     },
+     {
+      "id": "CSR2026-6.10",
+      "label": "Shortages in key health professions",
+      "scope": "Supply and attractiveness of health professionals, notably nurses, general practitioners and emergency doctors: workforce planning, working conditions, career incentives, safety and legal protection, and higher-quality specialisation courses."
+     },
+     {
+      "id": "CSR2026-6.11",
+      "label": "Coverage and adequacy of social protection",
+      "scope": "Cash benefits and social insurance: minimum income, support for families and children, and coverage of atypical workers, the self-employed, the unemployed and people outside the labour market, while maintaining fiscal sustainability."
+     },
+     {
+      "id": "CSR2026-6.12",
+      "label": "Access to social services for people in vulnerable situations",
+      "scope": "Availability and territorial equity of social assistance services (clear service targets, monitoring, national coordination, adequate and predictable financing), including services against child poverty such as school canteens, and housing-first interventions for homeless people."
+     }
+    ]
    }
   ]
  },
