@@ -1,0 +1,97 @@
+{
+ "schema_version": "0.1.0",
+ "title": "Italy Budget Law Reader – data schema",
+ "methodology": "docs/PROJECT_BRIEF.md",
+ "conventions": {
+  "language": "All descriptive fields are in English. Official Italian titles and terms are kept in fields ending in _it as source references; their English rendering sits in the matching _en field.",
+  "ids": {
+   "law": "lb-<year>, e.g. lb-2027 (one file per budget law bill; a later version of the same law gets a suffix, e.g. lb-2027-approved).",
+   "article": "A<n>, e.g. A12. Articles with a suffix keep it: A12bis.",
+   "paragraph": "A<n>-p<m>, e.g. A12-p3. Lettered points stay in the paragraph text; they do not get their own ID in 0.1.0.",
+   "measure": "M<nnn>, e.g. M001. Stable once assigned: a merged measure keeps the lower ID and the other ID is retired, never reused.",
+   "fiscal_row": "F<nnnn>, e.g. F0001, in the order of the summary table of financial effects.",
+   "source": "S<n>, e.g. S1."
+  },
+  "missing_values": "A value not given in the source is null and is exported as a blank cell. Null never means zero. A zero is stored only where the source prints a zero or an explicit dash defined by the source as zero.",
+  "signs_and_units": "Values keep the sign and unit of the source (normally EUR million). The source's sign convention is recorded once per law in meta.sign_convention and per row if it differs. No rescaling or sign change is stored in source fields.",
+  "balances": "Three balances are recorded separately and never added together: SNF (saldo netto da finanziare, State budget, budgetary competence), FAB (fabbisogno, borrowing requirement, cash basis), IN (indebitamento netto, net borrowing of general government, ESA 2010 accrual). See reference.json balances.",
+  "no_estimates": "No estimated, imputed or interpolated figures are stored. Fields for analytical or standardised values are reserved for later releases and are absent in 0.1.0.",
+  "classification_record": "Every classification is an object {value, rationale, confidence: high|medium|low, review: {status: not_reviewed|confirmed|amended|rejected, by, date (dd/mm/yyyy), note}}. Additional keys per dimension are listed below."
+ },
+ "files": {
+  "budget-law/data/laws.json": {
+   "description": "Registry of budget law files. The page lists these in the law selector and loads only the selected file. Empty until the first law is extracted.",
+   "fields": {
+    "schema_version": "string",
+    "laws": "array of {law_id, file, short, title_en, title_it, bill_ref (e.g. 'AS 1234' or 'AC 5678'), version_date (dd/mm/yyyy), status: skeleton|text extracted|fiscal extracted|classified|verified}"
+   }
+  },
+  "budget-law/data/reference.json": {
+   "description": "Shared reference data reused across laws: thematic taxonomy, relevance scale, low-priority criteria, CSR structure, alignment, confidence and review scales, balance definitions, enumerations.",
+   "fields": {
+    "schema_version": "string",
+    "version_date": "dd/mm/yyyy",
+    "thematic_areas": "array of {id: TA01..TA13, label, scope}",
+    "relevance_scale": "{criteria[{id, label, question}], levels[{id: high|medium|low, definition}], thresholds{...} (null until agreed)}",
+    "low_priority": "{label (interface label), note, criteria[{id: LP1.., label, definition, evidence_required}]}",
+    "csr_framework": "{status: awaiting text|loaded, year, source{label, provided_by, date, note}, recommendations[{id: CSR<year>-<n>, number, title, text (verbatim as provided), subcategories[{id: CSR<year>-<n>.<k>, label, scope}]}]}",
+    "csr_alignment_scale": "array of {id: explicit|indirect|weak_or_absent, definition}",
+    "confidence_scale": "array of {id: high|medium|low, definition}",
+    "review_status": "array of {id: not_reviewed|confirmed|amended|rejected, definition}",
+    "balances": "array of {id: SNF|FAB|IN, name_it, name_en, basis, perimeter, note}",
+    "enums": "{effect_type[], account_type[], duration[], beneficiaries[], seed[], source_kind[], source_status[]}",
+    "ministries": "array of {id: MIN01.., label_it, label_en, src_ref (stato di previsione table in Section II)}; loaded from the source. See also ministries_note",
+    "ministry_basis": "array of {id: named_in_provision|funded_in_state_budget|competence_inferred, definition}"
+   }
+  },
+  "budget-law/data/<law_id>.json": {
+   "description": "One file per budget law. Every record that can be exported on its own carries law_id.",
+   "fields": {
+    "law_id": "e.g. lb-2027",
+    "schema_version": "string",
+    "version_date": "dd/mm/yyyy – date of the bill version analysed",
+    "meta": "{title_it, title_en, bill_ref, legislature, stage (e.g. 'Government bill as tabled in the Senate'), as_of (dd/mm/yyyy, extraction date), horizon [year1, year2, year3], unit_default ('EUR million'), sign_convention (as stated in the source), reconciliation_tolerance (number in unit_default; default 0 – rounding differences are reported, not hidden), out_of_scope[] (e.g. 'Section II – budget appropriations')}",
+    "sources": "array of {id, kind (enums.source_kind), label_it, label_en, url, file, pages, retrieved (dd/mm/yyyy), status (enums.source_status), duplicate_of?, note}",
+    "articles": "array of {law_id, id, number, heading_it, heading_en, title_part (Part/Title/Chapter heading as in the bill, if any), paragraphs[paragraph ids], src (source id), page}",
+    "paragraphs": "array of {law_id, id, article, number, text_it (full official text, verbatim), summary_en (short English summary, flagged as a summary), src, page, has_fiscal_effects: true|false|null (null until the summary table is matched)}",
+    "measures": "array of {law_id, id, title_en, description_en (canonical description), refs[paragraph ids] (many-to-many), fiscal_rows[fiscal row ids], seed (enums.seed), lineage {merged_from[], split_from, note}, thematic, ministry, relevance, low_priority, csr, profile}",
+    "measures[].thematic": "classification record + {primary (thematic area id), secondary (thematic area id|null)}",
+    "measures[].ministry": "classification record + {primary (ministry id), secondary[ministry ids], basis (ministry_basis id)}. The ministry competent for the measure: named in the provision, or where the resources sit in the State budget, or inferred from subject matter and legal basis (confidence capped at medium; the rationale cites the legal basis). One primary only; secondary only where the provision assigns a real role to a second ministry.",
+    "measures[].relevance": "classification record; value: high|medium|low; + {criteria {fiscal_impact, beneficiaries, nature}: short notes per criterion}",
+    "measures[].low_priority": "classification record; value: true|false; + {criteria[LP ids] (mandatory when value is true; the criterion applied is always stated)}",
+    "measures[].csr": "classification record; value: alignment id (explicit|indirect|weak_or_absent); + {primary {csr, sub}|null, secondary[{csr, sub}]}. Alignment does not equal effectiveness.",
+    "measures[].profile": "classification record (descriptive, used for the aggregate orientation); + {effect_type (enums.effect_type), duration (enums.duration), beneficiaries[] (enums.beneficiaries)}",
+    "fiscal_rows": "array of {law_id, id, src, table, page, row_label_it, row_label_en, article, paragraph, refs[paragraph ids], effect_type (enums.effect_type, as grouped in the source), account_type (enums.account_type), unit, sign_convention (only if it differs from meta.sign_convention), values {SNF {year: number|null}, FAB {year: number|null}, IN {year: number|null}}, measure (measure id|null), match_status: matched|unmatched|excluded, note}",
+    "source_totals": "array of {law_id, label_it, label_en, balance (SNF|FAB|IN), year, value, src, table, page} – totals printed in the summary table, used only for reconciliation",
+    "orientation": "{status: not started|draft|reviewed, text_en, metrics[{id, label, balance, year, value, basis_note}], rationale, review} – aggregate, descriptive and non-partisan; computed from fiscal_rows and measures, never entered by hand",
+    "checks": "{name: {result: pass|fail|not run, text, date}} – reconciliation and verification results",
+    "uncertainties": "array of {id, stage, text, raised (dd/mm/yyyy), resolved (dd/mm/yyyy|null), resolution}"
+   }
+  }
+ },
+ "excel_export": {
+  "README": "Sources, extraction date, methodology, conventions (one row per item).",
+  "Measures": "One row per measure with all classifications, rationales, confidence and review status. Includes ministry (primary, secondary, basis).",
+  "Fiscal_effects": "Main sheet for the model, laid out like the summary table of financial effects: one row per measure, one column per balance-year (SNF, FAB, IN × each year of the horizon). Each cell is the sum of the measure's fiscal rows for that balance and year, over non-blank values only; a cell with no value in any row is blank, never zero. 'Blank inputs' counts the blank source values behind the row. Balances are never added together.",
+  "Summary_by_area": "Totals by thematic area, by ministry (primary only) and by CSR (primary only) per balance and year, with count of blank inputs. Balances are never summed across each other.",
+  "QA": "Reconciliation of the sum of fiscal rows with source_totals per balance and year; unmatched and excluded rows; measures without legal references; classifications pending review.",
+  "Source_rows": "Traceability only: one row per fiscal row of the summary table (with its measure, article, source reference and match status), one column per balance-year. Not the model input."
+ },
+ "changelog": [
+  {
+   "version": "0.1.0",
+   "date": "22/11/2026",
+   "change": "Initial schema for the Italy Budget Law Reader MVP: law registry, shared reference data, per-law file (articles, paragraphs, measures, fiscal rows from the summary table of financial effects, source totals, orientation, checks, uncertainties). Derived from the conventions of the EU Amendment Reader schema 1.2.0 (data/schema.json); no field shared with that schema."
+  },
+  {
+   "version": "0.1.0 (export layout revision)",
+   "date": "23/11/2026",
+   "change": "Excel export: removed the long-format sheet (measure × row × balance × year); added Fiscal_effects (one row per measure, columns = balance-year, as in the summary table of financial effects); the row-level view is kept as Source_rows for traceability. No change to the JSON data fields."
+  },
+  {
+   "version": "0.1.0 (ministry classification)",
+   "date": "23/11/2026",
+   "change": "Added measures[].ministry classification and reference.json ministries/ministry_basis; reader filter, detail card, summary and Excel columns. Ministry list empty until loaded from Section II."
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+{
+ "schema_version": "0.1.0",
+ "laws": [
+   {"law_id": "lb-2027", "file": "data/lb-2027.json", "short": "Legge di bilancio 2027 (lotto di prova artt. 1-4)",
+    "title_en": "State budget 2027 — trial batch (Articles 1-4)",
+    "bill_ref": "AC 3174-bis", "version_date": "04/11/2026", "status": "classified (trial batch only)"}
+ ]
+}

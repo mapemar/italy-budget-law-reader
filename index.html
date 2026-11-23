@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Italy Budget Law Reader</title>
+<!-- Data: data/laws.json (registry), data/reference.json (taxonomy, scales, CSRs, balances), data/<law_id>.json (one file per budget law). Schema and change log: data/schema.json. Methodology: ../docs/PROJECT_BRIEF.md. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Same design tokens as the EU Amendment Reader (../index.html). */
+:root{
+  --paper:#f5f6f8; --sheet:#ffffff; --ink:#18202b; --ink-2:#4a5566; --ink-3:#6b7585; --rule:#d9dde4; --rule-2:#e9ecf1;
+  --accent:#1f4f8f; --accent-2:#e7eef8; --accent-ink:#ffffff;
+  --ok:#1d6b3a; --warn:#8a5a00; --bad:#9b2a1d; --ok-bg:#e3f2e8; --warn-bg:#fbf0d9; --bad-bg:#f9e4e1; --hl:#fff4c2;
+  --f-display:"Newsreader","Iowan Old Style",Georgia,serif;
+  --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:6px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --paper:#11151b; --sheet:#181d25; --ink:#e6e9ee; --ink-2:#b4bcc8; --ink-3:#8b95a4; --rule:#2c3440; --rule-2:#232a34;
+  --accent:#8fb4ea; --accent-2:#1d2a3d; --accent-ink:#0d1620;
+  --ok:#7fd39a; --warn:#e5b95a; --bad:#f09a8c; --ok-bg:#16301f; --warn-bg:#352a12; --bad-bg:#3a1c18; --hl:#3d3514; color-scheme:dark}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font:15px/1.5 var(--f-body);margin:0}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;margin:0;line-height:1.2;text-wrap:balance}
+h2{font-size:22px} h3{font-size:17px}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:1440px;margin:0 auto}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--ink-3)} .small{font-size:12.5px}
+.eyebrow{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+.btn{border:1px solid var(--rule);background:var(--sheet);border-radius:var(--r);padding:6px 12px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+select,input[type=search]{border:1px solid var(--rule);background:var(--sheet);border-radius:var(--r);padding:5px 8px;max-width:100%}
+/* masthead */
+.mast{background:var(--sheet);border-bottom:1px solid var(--rule)}
+.mast .wrap{padding-block:16px 12px;display:grid;gap:6px}
+.mast h1{font-size:clamp(22px,3.2vw,30px)}
+.lawbar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13.5px;color:var(--ink-2)}
+.lawbar .grow{flex:1}
+/* tab + filter bar */
+.bar{position:sticky;top:0;z-index:10;background:var(--sheet);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding-block:8px}
+.tabs{display:flex;gap:2px;flex-wrap:wrap}
+.tabs button{border:0;background:none;padding:6px 12px;border-radius:var(--r);color:var(--ink-2);font-weight:500}
+.tabs button[aria-selected=true]{background:var(--accent-2);color:var(--accent)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.filters select{max-width:230px}
+/* views */
+main{padding-block:18px 60px}
+.panel{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:16px 18px}
+.empty{color:var(--ink-2)}
+.empty b{color:var(--ink)}
+.notice{background:var(--warn-bg);border:1px solid var(--rule);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;font-size:13.5px}
+.two{display:grid;grid-template-columns:minmax(220px,320px) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:820px){.two{grid-template-columns:minmax(0,1fr)}}
+.alist{position:sticky;top:64px;max-height:calc(100vh - 84px);overflow:auto;padding:6px}
+.aitem{display:block;width:100%;text-align:left;border:0;background:none;padding:7px 9px;border-radius:var(--r);line-height:1.35}
+.aitem:hover{background:var(--rule-2)}
+.aitem.on{background:var(--accent-2)}
+.aitem .cnt{display:block;font-size:11.5px;color:var(--ink-3)}
+.plist{margin:2px 0 6px 18px;display:flex;flex-wrap:wrap;gap:4px}
+.plist button{border:1px solid var(--rule);background:var(--sheet);border-radius:999px;padding:0 8px;font-size:12px}
+.plist button.on{border-color:var(--accent);color:var(--accent)}
+.para{border-top:1px solid var(--rule-2);padding:14px 0;scroll-margin-top:70px}
+.para.sel{background:linear-gradient(90deg,var(--hl),transparent 60%);margin-inline:-18px;padding-inline:18px}
+.phead{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.itext{font-family:var(--f-display);font-size:16px;line-height:1.55;white-space:pre-wrap;margin:6px 0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.chip{border:1px solid var(--rule);background:var(--sheet);border-radius:999px;padding:2px 10px;font-size:12.5px;text-align:left}
+.chip:hover{border-color:var(--accent)}
+.flag{display:inline-block;font-size:11px;font-weight:600;padding:0 6px;border-radius:4px;background:var(--warn-bg);color:var(--warn)}
+.lvl-high{color:var(--bad);font-weight:600} .lvl-medium{color:var(--warn);font-weight:600} .lvl-low{color:var(--ink-3)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border-bottom:1px solid var(--rule-2);padding:5px 7px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--ink-2);background:var(--paper)}
+th.bg{text-align:center;border-left:1px solid var(--rule)}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bl{border-left:1px solid var(--rule)}
+td.blank{color:var(--ink-3)}
+.tscroll{overflow-x:auto;margin:8px 0}
+caption{caption-side:bottom;text-align:left;font-size:12px;color:var(--ink-3);padding-top:4px}
+tr.clk{cursor:pointer} tr.clk:hover td{background:var(--accent-2)} tr.on td{background:var(--accent-2)}
+.grid-cls{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:10px 0}
+.cls{border:1px solid var(--rule);border-radius:var(--r);padding:10px 12px}
+.cls.rej{opacity:.6}
+.cls .cv{font-weight:600;margin:2px 0 4px}
+.cls p{margin:4px 0;font-size:13.5px}
+.sec{margin-top:22px}
+.sec>h3{margin-bottom:6px}
+.balsel{display:inline-flex;gap:2px;border:1px solid var(--rule);border-radius:var(--r);padding:2px}
+.balsel button{border:0;background:none;padding:3px 10px;border-radius:4px;font-size:13px}
+.balsel button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink)}
+dl.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 14px;margin:6px 0;font-size:13.5px}
+dl.kv dt{color:var(--ink-3)} dl.kv dd{margin:0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:var(--r);font-size:13.5px;z-index:50}
+</style>
+</head>
+<body>
+<header class="mast"><div class="wrap">
+  <div class="eyebrow">Italy · Budget Law Reader</div>
+  <h1 id="law-title">Italy Budget Law Reader</h1>
+  <div class="lawbar">
+    <label>Budget law <select id="law-sel" aria-label="Select budget law"></select></label>
+    <span id="law-meta" class="small"></span>
+    <span class="grow"></span>
+    <label class="small"><input type="checkbox" id="xl-filtered"> Apply current filters to the export</label>
+    <button type="button" class="btn primary" id="xl-btn">Export to Excel</button>
+  </div>
+</div></header>
+<nav class="bar" aria-label="Views and filters"><div class="wrap">
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" data-tab="articles">Articles</button>
+    <button type="button" role="tab" data-tab="measures">Measures</button>
+    <button type="button" role="tab" data-tab="summary">Summary</button>
+    <button type="button" role="tab" data-tab="method">Method &amp; sources</button>
+  </div>
+  <div class="filters">
+    <select id="f-area" aria-label="Filter by thematic area"></select>
+    <select id="f-min" aria-label="Filter by ministry"></select>
+    <select id="f-csr" aria-label="Filter by Country-Specific Recommendation"></select>
+    <select id="f-rel" aria-label="Filter by relevance"></select>
+    <select id="f-lp" aria-label="Filter by low-priority flag"></select>
+    <input type="search" id="f-q" placeholder="Search ID, title, text" aria-label="Search">
+    <button type="button" class="btn" id="f-reset">Reset</button>
+    <span id="f-count" class="small muted" aria-live="polite"></span>
+  </div>
+</div></nav>
+<main class="wrap" id="view"><div class="panel empty">Loading…</div></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+"use strict";
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const STORE={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{v?localStorage.setItem(k,v):localStorage.removeItem(k)}catch(e){}}};
+const BAL=['SNF','FAB','IN'];
+const round=x=>Math.round(x*1e6)/1e6;
+const fmt=v=>v==null?'':Number(v).toLocaleString('en-GB',{maximumFractionDigits:3});
+const push=(m,k,v)=>{const a=m.get(k);a?a.push(v):m.set(k,[v])};
+const toast=t=>{const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),3800)};
+const today=()=>{const d=new Date();return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear()};
+/* A classification whose review status is 'rejected' is not used in filters or summaries. */
+const live=c=>c&&!(c.review&&c.review.status==='rejected')?c:null;
+
+let REG,REF,SCHEMA,D,IDX,YEARS;
+const S={tab:'articles',sel:null,msel:null,bal:'IN',f:{area:'',min:'',csr:'',rel:'',lp:'',q:''}};
+
+/* ---------- load ---------- */
+(async function(){
+  const ld=async u=>{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error(u+' ('+r.status+')');return r.json()};
+  try{
+    [REG,REF,SCHEMA]=await Promise.all([ld('data/laws.json'),ld('data/reference.json'),ld('data/schema.json')]);
+    const want=new URLSearchParams(location.search).get('law')||STORE.get('blr-law')||(REG.laws[0]||{}).law_id;
+    const entry=REG.laws.find(l=>l.law_id===want)||REG.laws[0]||null;
+    D=entry?await ld(entry.file):emptyLaw();
+    D._entry=entry;
+    buildIndex(); initControls(); routeFromHash(); render();
+  }catch(e){$('#view').innerHTML='<div class="panel empty">The data files could not be loaded ('+esc(e.message||e)+'). Serve the folder over HTTP (see budget-law/README.md) rather than opening the file directly.</div>'}
+})();
+
+function emptyLaw(){return{law_id:null,_empty:true,schema_version:SCHEMA.schema_version,meta:{horizon:[],unit_default:'EUR million'},sources:[],articles:[],paragraphs:[],measures:[],fiscal_rows:[],source_totals:[],orientation:{status:'not started'},checks:{},uncertainties:[]}}
+
+function buildIndex(){
+  for(const k of ['sources','articles','paragraphs','measures','fiscal_rows','source_totals','uncertainties'])D[k]=D[k]||[];
+  D.meta=D.meta||{}; D.checks=D.checks||{}; D.orientation=D.orientation||{status:'not started'};
+  const en=(a)=>new Map(a.map(x=>[x.id,x]));
+  IDX={art:en(D.articles),par:en(D.paragraphs),mea:en(D.measures),row:en(D.fiscal_rows),src:en(D.sources),
+    area:en(REF.thematic_areas),min:en(REF.ministries||[]),lp:en(REF.low_priority.criteria),bal:en(REF.balances),
+    eff:en(REF.enums.effect_type),acc:en(REF.enums.account_type),dur:en(REF.enums.duration),ben:en(REF.enums.beneficiaries),
+    seed:en(REF.enums.seed),kind:en(REF.enums.source_kind),sstat:en(REF.enums.source_status),
+    align:en(REF.csr_alignment_scale),rev:en(REF.review_status),
+    csr:new Map(),sub:new Map(),parMea:new Map(),parRows:new Map(),meaRows:new Map()};
+  for(const c of REF.csr_framework.recommendations||[]){IDX.csr.set(c.id,c);for(const s of c.subcategories||[])IDX.sub.set(s.id,Object.assign({csr:c.id},s))}
+  for(const m of D.measures)for(const p of m.refs||[])push(IDX.parMea,p,m.id);
+  for(const r of D.fiscal_rows){
+    const refs=(r.refs&&r.refs.length)?r.refs:(r.paragraph?[r.paragraph]:[]);
+    for(const p of refs)push(IDX.parRows,p,r);
+    if(r.measure)push(IDX.meaRows,r.measure,r);
+  }
+  YEARS=(D.meta.horizon&&D.meta.horizon.length)?D.meta.horizon.map(String):['Year 1','Year 2','Year 3'];
+}
+const val=(r,b,y)=>{const v=r.values&&r.values[b]?r.values[b][y]:null;return (v===undefined||v===null||v==='')?null:Number(v)};
+
+/* ---------- labels ---------- */
+const minL=id=>id?(IDX.min.get(id)?(IDX.min.get(id).label_en||IDX.min.get(id).label_it):id):'';
+const areaL=id=>id?(IDX.area.get(id)?id+' '+IDX.area.get(id).label:id):'';
+const csrL=x=>{if(!x)return'';const c=IDX.csr.get(x.csr);let s=c?'CSR '+c.number+(c.title?' – '+c.title:''):x.csr||'';if(x.sub)s+=' · '+(IDX.sub.get(x.sub)?IDX.sub.get(x.sub).label:x.sub);return s};
+const csrShort=x=>x?(IDX.csr.get(x.csr)?'CSR '+IDX.csr.get(x.csr).number:x.csr)+(x.sub?'.'+String(x.sub).split('.').pop():''):'';
+const revL=c=>{const s=(c&&c.review&&c.review.status)||'not_reviewed';return (IDX.rev.get(s)?s.replace('_',' '):s)};
+const effL=id=>id?(IDX.eff.get(id)?IDX.eff.get(id).label_en:id):'';
+const accL=id=>id?(IDX.acc.get(id)?IDX.acc.get(id).label_en:id):'';
+const balL=b=>{const x=IDX.bal.get(b);return x?x.name_en+' ('+x.name_it+')':b};
+const lpOn=m=>{const l=live(m.low_priority);return !!(l&&l.value===true)};
+
+/* ---------- filters ---------- */
+function initControls(){
+  const opt=(v,t,dis)=>'<option value="'+esc(v)+'"'+(dis?' disabled':'')+'>'+esc(t)+'</option>';
+  $('#f-area').innerHTML=opt('','All thematic areas')+REF.thematic_areas.map(a=>opt(a.id,a.id+' '+a.label)).join('')+opt('_none','Not yet classified');
+  const mins=REF.ministries||[];
+  $('#f-min').innerHTML=opt('','All ministries')+(mins.length?mins.map(x=>opt(x.id,x.label_en||x.label_it)).join('')+opt('_none','Not yet classified'):opt('_na','Ministries not loaded yet',true));
+  const recs=REF.csr_framework.recommendations||[];
+  $('#f-csr').innerHTML=opt('','All CSRs')+(recs.length?recs.map(c=>opt(c.id,'CSR '+c.number+(c.title?' – '+c.title:''))+(c.subcategories||[]).map(s=>opt(s.id,'   '+s.label)).join('')).join(''):opt('_na','CSRs not loaded yet',true));
+  $('#f-rel').innerHTML=opt('','Any relevance')+REF.relevance_scale.levels.map(l=>opt(l.id,'Relevance: '+l.id)).join('')+opt('_none','Relevance not yet classified');
+  $('#f-lp').innerHTML=opt('','Low-priority flag: any')+opt('yes','Flagged: '+REF.low_priority.label)+opt('no','Not flagged');
+  for(const k of ['area','min','csr','rel','lp'])$('#f-'+k).addEventListener('change',e=>{S.f[k]=e.target.value;render()});
+  let t;$('#f-q').addEventListener('input',e=>{clearTimeout(t);t=setTimeout(()=>{S.f.q=e.target.value.trim();render()},150)});
+  $('#f-reset').addEventListener('click',()=>{S.f={area:'',min:'',csr:'',rel:'',lp:'',q:''};for(const k of ['area','min','csr','rel','lp','q'])$('#f-'+k).value='';render()});
+  document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{S.tab=b.dataset.tab;setHash('');render()}));
+  /* law selector */
+  const ls=$('#law-sel');
+  if(!REG.laws.length){ls.innerHTML=opt('','No budget law loaded yet');ls.disabled=true}
+  else{ls.innerHTML=REG.laws.map(l=>opt(l.law_id,l.short||l.law_id)).join('');ls.value=D.law_id;
+    ls.addEventListener('change',()=>{STORE.set('blr-law',ls.value);location.search='?law='+encodeURIComponent(ls.value)})}
+  const m=D.meta;
+  $('#law-title').textContent=D._empty?'Italy Budget Law Reader':(m.title_en||D.law_id);
+  $('#law-meta').innerHTML=D._empty?'<span class="muted">Reference data and schema '+esc(SCHEMA.schema_version)+' loaded</span>'
+    :[m.bill_ref,m.stage,D.version_date&&'bill version '+D.version_date,m.as_of&&'extracted '+m.as_of,m.horizon&&m.horizon.length&&'horizon '+m.horizon.join('–'),m.unit_default].filter(Boolean).map(esc).join(' · ');
+  $('#xl-btn').addEventListener('click',exportXlsx);
+  $('#view').addEventListener('click',onClick);
+  window.addEventListener('hashchange',()=>{routeFromHash();render()});
+}
+const anyFilter=()=>Object.values(S.f).some(Boolean);
+function passes(m){
+  const f=S.f;
+  if(f.area){const t=live(m.thematic);if(f.area==='_none'){if(t&&t.primary)return false}else if(!t||(t.primary!==f.area&&t.secondary!==f.area))return false}
+  if(f.min){const t=live(m.ministry);if(f.min==='_none'){if(t&&t.primary)return false}else if(!t||(t.primary!==f.min&&!(t.secondary||[]).includes(f.min)))return false}
+  if(f.csr){const c=live(m.csr);if(!c)return false;const all=[c.primary,...(c.secondary||[])].filter(Boolean);if(!all.some(x=>x.csr===f.csr||x.sub===f.csr))return false}
+  if(f.rel){const r=live(m.relevance);if(f.rel==='_none'){if(r&&r.value)return false}else if(!r||r.value!==f.rel)return false}
+  if(f.lp){if(f.lp==='yes'&&!lpOn(m))return false;if(f.lp==='no'&&lpOn(m))return false}
+  if(f.q){const q=f.q.toLowerCase();const hay=[m.id,m.title_en,m.description_en,...(m.refs||[]),...(m.fiscal_rows||[])].join(' ').toLowerCase();if(!hay.includes(q))return false}
+  return true;
+}
+function articleVisible(a){
+  if(!anyFilter())return true;
+  const pars=a.paragraphs||[];
+  if(pars.some(p=>(IDX.parMea.get(p)||[]).some(id=>IDX.mea.has(id)&&passes(IDX.mea.get(id)))))return true;
+  const onlyQ=S.f.q&&!S.f.area&&!S.f.min&&!S.f.csr&&!S.f.rel&&!S.f.lp;
+  if(onlyQ){const q=S.f.q.toLowerCase();const hay=[a.id,a.heading_it,a.heading_en,...pars.map(p=>{const x=IDX.par.get(p)||{};return (x.id||'')+' '+(x.text_it||'')+' '+(x.summary_en||'')})].join(' ').toLowerCase();return hay.includes(q)}
+  return false;
+}
+
+/* ---------- routing ---------- */
+function setHash(h){history.replaceState(null,'',h?'#'+h:location.pathname+location.search)}
+function routeFromHash(){
+  const h=decodeURIComponent(location.hash.slice(1));if(!h)return;
+  if(IDX.par.has(h)){S.tab='articles';S.sel=h}
+  else if(IDX.art.has(h)){S.tab='articles';S.sel=h}
+  else if(IDX.mea.has(h)){S.tab='measures';S.msel=h}
+}
+function onClick(e){
+  const t=e.target.closest('[data-art],[data-par],[data-mea],[data-bal],[data-go]');if(!t)return;
+  if(t.dataset.art){S.tab='articles';S.sel=t.dataset.art;setHash(S.sel);render();window.scrollTo({top:0})}
+  else if(t.dataset.par){S.tab='articles';S.sel=t.dataset.par;setHash(S.sel);render();const el=document.getElementById('para-'+S.sel);if(el)el.scrollIntoView({block:'start'})}
+  else if(t.dataset.mea){S.tab='measures';S.msel=t.dataset.mea;setHash(S.msel);render();const el=$('#mdetail');if(el)el.scrollIntoView({block:'start'})}
+  else if(t.dataset.bal){S.bal=t.dataset.bal;render()}
+  else if(t.dataset.go){S.tab=t.dataset.go;render()}
+}
+
+/* ---------- render ---------- */
+function render(){
+  document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===S.tab)));
+  const ms=D.measures.filter(passes);
+  $('#f-count').textContent=D.measures.length?(anyFilter()?ms.length+' of '+D.measures.length+' measures':D.measures.length+' measures'):'';
+  const v={articles:vArticles,measures:vMeasures,summary:vSummary,method:vMethod}[S.tab];
+  $('#view').innerHTML=(D._empty&&S.tab!=='method'?'<div class="notice"><b>No budget law loaded yet.</b> The views fill in once the sources (bill text, Technical Report and summary table of financial effects) have been extracted. Filters, navigator and Excel export are operational; the export currently produces the empty workbook template.</div>':'')+v(ms);
+}
+const emptyP=t=>'<div class="panel empty">'+t+'</div>';
+
+function fiscTable(rows,opt={}){
+  if(!rows.length)return '<p class="small muted">No row of the summary table of financial effects is linked here.</p>';
+  const h1='<tr><th rowspan="2">Row</th>'+(opt.measure?'<th rowspan="2">Measure</th>':'')+'<th rowspan="2">Description in the source</th><th rowspan="2">Effect</th>'+BAL.map(b=>'<th class="bg" colspan="'+YEARS.length+'" title="'+esc(balL(b)+' – '+(IDX.bal.get(b)||{}).basis)+'">'+b+'</th>').join('')+'</tr>';
+  const h2='<tr>'+BAL.map(()=>YEARS.map((y,i)=>'<th class="num'+(i===0?' bg':'')+'">'+esc(y)+'</th>').join('')).join('')+'</tr>';
+  const body=rows.map(r=>'<tr><td class="mono">'+esc(r.id)+(r.page?'<div class="small muted">p. '+esc(r.page)+'</div>':'')+'</td>'+(opt.measure?'<td>'+(r.measure?'<button type="button" class="chip" data-mea="'+esc(r.measure)+'">'+esc(r.measure)+'</button>':'<span class="small muted">unmatched</span>')+'</td>':'')+
+    '<td>'+esc(r.row_label_en||'')+(r.row_label_it?'<div class="small muted" lang="it">'+esc(r.row_label_it)+'</div>':'')+'</td><td class="small">'+esc(effL(r.effect_type))+(r.account_type?'<br><span class="muted">'+esc(accL(r.account_type))+'</span>':'')+'</td>'+
+    BAL.map(b=>YEARS.map((y,i)=>{const v=val(r,b,y);return v==null?'<td class="num blank'+(i===0?' bl':'')+'" title="Not given in the source">—</td>':'<td class="num'+(i===0?' bl':'')+'">'+fmt(v)+'</td>'}).join('')).join('')+'</tr>').join('');
+  return '<div class="tscroll"><table><caption>'+esc(D.meta.unit_default||'')+'; signs as in the source'+(D.meta.sign_convention?' ('+esc(D.meta.sign_convention)+')':'')+'. — = not given in the source (not zero). SNF, FAB and IN are separate balances and are not additive.</caption><thead>'+h1+h2+'</thead><tbody>'+body+'</tbody></table></div>';
+}
+
+/* Articles navigator */
+function vArticles(){
+  if(!D.articles.length)return emptyP('<b>Article navigator.</b> No article text loaded yet. Once the bill text (Section I) is extracted, each article and paragraph appears here with its full text, linked measures and financial effects.');
+  const arts=D.articles.filter(articleVisible);
+  if(!arts.length)return emptyP('No article matches the current filters.');
+  const selPar=IDX.par.get(S.sel);
+  const curId=selPar?selPar.article:(IDX.art.has(S.sel)?S.sel:arts[0].id);
+  const cur=IDX.art.get(curId)||arts[0];
+  const nm=a=>new Set((a.paragraphs||[]).flatMap(p=>IDX.parMea.get(p)||[])).size;
+  const list=arts.map(a=>'<button type="button" class="aitem'+(a.id===cur.id?' on':'')+'" data-art="'+esc(a.id)+'"><span class="mono">Art. '+esc(a.number)+'</span> '+esc(a.heading_en||a.heading_it||'')+'<span class="cnt">'+(a.paragraphs||[]).length+' paragraphs · '+nm(a)+' measures</span></button>'+
+    (a.id===cur.id?'<div class="plist">'+(a.paragraphs||[]).map(p=>'<button type="button" data-par="'+esc(p)+'" class="'+(p===S.sel?'on':'')+'">'+esc((IDX.par.get(p)||{}).number??p)+'</button>').join('')+'</div>':'')).join('');
+  const pars=(cur.paragraphs||[]).map(p=>IDX.par.get(p)).filter(Boolean).map(p=>{
+    const mids=IDX.parMea.get(p.id)||[];const rows=IDX.parRows.get(p.id)||[];
+    return '<section class="para'+(p.id===S.sel?' sel':'')+'" id="para-'+esc(p.id)+'"><div class="phead"><b class="mono">'+esc(p.id)+'</b><span class="small muted">Paragraph '+esc(p.number)+(p.page?' · source p. '+esc(p.page):'')+(p.src?' · '+esc(p.src):'')+(p.has_fiscal_effects===false?' · no financial effects in the summary table':'')+'</span></div>'+
+      (p.summary_en?'<div><span class="eyebrow">Summary (English)</span> '+esc(p.summary_en)+'</div>':'')+
+      '<div class="eyebrow" style="margin-top:6px">Official text (Italian)</div><div class="itext" lang="it">'+esc(p.text_it||'')+'</div>'+
+      (mids.length?'<div class="chips"><span class="eyebrow">Measures</span>'+mids.map(id=>{const m=IDX.mea.get(id);return '<button type="button" class="chip" data-mea="'+esc(id)+'">'+esc(id)+' '+esc(m?m.title_en:'')+(m&&lpOn(m)?' <span class="flag">low priority</span>':'')+'</button>'}).join('')+'</div>':'<div class="small muted">No measure linked yet.</div>')+
+      (rows.length?fiscTable(rows,{measure:true}):'')+'</section>'}).join('');
+  return '<div class="two"><nav class="panel alist" aria-label="Articles">'+list+'</nav><article class="panel"><div class="eyebrow">Article '+esc(cur.number)+(cur.title_part?' · '+esc(cur.title_part):'')+'</div><h2>'+esc(cur.heading_en||'')+'</h2>'+(cur.heading_it?'<div class="muted" lang="it">'+esc(cur.heading_it)+'</div>':'')+(cur.page?'<div class="small muted">Source p. '+esc(cur.page)+'</div>':'')+pars+'</article></div>';
+}
+
+/* Measures */
+function clsCard(label,c,valueHtml,extra){
+  if(!c)return '<div class="cls"><div class="eyebrow">'+label+'</div><div class="muted">Not yet classified</div></div>';
+  const rv=c.review||{};
+  return '<div class="cls'+(rv.status==='rejected'?' rej':'')+'"><div class="eyebrow">'+label+'</div><div class="cv">'+valueHtml+'</div>'+(extra||'')+(c.rationale?'<p>'+esc(c.rationale)+'</p>':'')+
+    '<div class="small muted">Confidence: '+esc(c.confidence||'–')+' · Review: '+esc(revL(c))+(rv.by?' ('+esc(rv.by)+(rv.date?', '+esc(rv.date):'')+')':'')+(rv.note?' – '+esc(rv.note):'')+'</div></div>';
+}
+function measureDetail(m){
+  const t=m.thematic,r=m.relevance,l=m.low_priority,c=m.csr,p=m.profile;
+  const rows=IDX.meaRows.get(m.id)||[];
+  const relCrit=r&&r.criteria?'<ul class="small" style="margin:4px 0;padding-left:18px">'+REF.relevance_scale.criteria.map(k=>r.criteria[k.id]?'<li>'+esc(k.label)+': '+esc(r.criteria[k.id])+'</li>':'').join('')+'</ul>':'';
+  return '<section class="panel sec" id="mdetail"><div class="eyebrow">Measure '+esc(m.id)+(m.seed?' · '+esc((IDX.seed.get(m.seed)||{}).label_en||m.seed):'')+'</div><h2>'+esc(m.title_en)+'</h2><p>'+esc(m.description_en||'')+'</p>'+
+    '<div class="chips"><span class="eyebrow">Legal references</span>'+((m.refs||[]).map(p=>'<button type="button" class="chip mono" data-par="'+esc(p)+'">'+esc(p)+'</button>').join('')||'<span class="small muted">none</span>')+'</div>'+
+    (m.lineage&&(m.lineage.note||(m.lineage.merged_from||[]).length||m.lineage.split_from)?'<div class="small muted">Lineage: '+esc([(m.lineage.merged_from||[]).length?'merged from '+m.lineage.merged_from.join(', '):'',m.lineage.split_from?'split from '+m.lineage.split_from:'',m.lineage.note||''].filter(Boolean).join('; '))+'</div>':'')+
+    '<div class="grid-cls">'+
+    clsCard('Thematic area',t,t?esc(areaL(t.primary))+(t.secondary?'<div class="small">Secondary: '+esc(areaL(t.secondary))+'</div>':''):'')+
+    clsCard('Ministry',m.ministry,m.ministry?esc(minL(m.ministry.primary))+((m.ministry.secondary||[]).length?'<div class="small">Secondary: '+esc(m.ministry.secondary.map(minL).join('; '))+'</div>':'')+(m.ministry.basis?'<div class="small">Basis: '+esc(String(m.ministry.basis).replace(/_/g,' '))+'</div>':''):'')+
+    clsCard('Relevance',r,r?'<span class="lvl-'+esc(r.value)+'">'+esc(r.value)+'</span>':'',relCrit)+
+    clsCard(esc(REF.low_priority.label),l,l?(l.value?'<span class="flag">Flagged</span> '+esc((l.criteria||[]).map(x=>x+' '+((IDX.lp.get(x)||{}).label||'')).join('; ')):'Not flagged'):'')+
+    clsCard('2026 CSRs',c,c?esc((IDX.align.get(c.value)?c.value.replace(/_/g,' '):c.value)+' alignment')+'<div class="small">Primary: '+esc(csrL(c.primary)||'–')+'</div>'+((c.secondary||[]).length?'<div class="small">Secondary: '+esc(c.secondary.map(csrL).join('; '))+'</div>':''):'','<div class="small muted">'+esc(REF.csr_alignment_note)+'</div>')+
+    clsCard('Profile (for the aggregate orientation)',p,p?esc([effL(p.effect_type),p.duration&&(IDX.dur.get(p.duration)||{}).label_en,(p.beneficiaries||[]).map(b=>(IDX.ben.get(b)||{}).label_en||b).join(', ')].filter(Boolean).join(' · ')):'')+
+    '</div><h3>Financial effects</h3>'+fiscTable(rows)+'</section>';
+}
+function vMeasures(ms){
+  if(!D.measures.length)return emptyP('<b>Measures.</b> No measure identified yet. Measures are seeded from the rows of the summary table of financial effects, then merged or split, then completed with provisions that have no financial effects.');
+  const sel=S.msel&&IDX.mea.get(S.msel);
+  const rowsH=ms.map(m=>{const t=live(m.thematic),mn=live(m.ministry),r=live(m.relevance),c=live(m.csr);
+    const nrev=[m.thematic,m.ministry,m.relevance,m.low_priority,m.csr,m.profile].filter(x=>x&&x.review&&x.review.status&&x.review.status!=='not_reviewed').length;
+    return '<tr class="clk'+(sel&&sel.id===m.id?' on':'')+'" data-mea="'+esc(m.id)+'"><td class="mono">'+esc(m.id)+'</td><td>'+esc(m.title_en)+'</td><td class="small">'+esc(t?areaL(t.primary):'–')+'</td><td class="small">'+esc(mn?minL(mn.primary):'–')+'</td><td>'+(r?'<span class="lvl-'+esc(r.value)+'">'+esc(r.value)+'</span>':'–')+'</td><td class="small">'+esc(c?csrShort(c.primary)+' · '+String(c.value||'').replace(/_/g,' '):'–')+'</td><td>'+(lpOn(m)?'<span class="flag">flagged</span>':'')+'</td><td class="small">'+nrev+'/5</td><td class="small mono">'+esc((m.refs||[]).join(', '))+'</td></tr>'}).join('');
+  return (sel?measureDetail(sel):'')+'<section class="panel sec"><h3>Measures</h3><div class="tscroll"><table><thead><tr><th>ID</th><th>Measure</th><th>Thematic area</th><th>Ministry</th><th>Relevance</th><th>CSR</th><th>Low priority</th><th>Reviewed</th><th>Legal references</th></tr></thead><tbody>'+(rowsH||'<tr><td colspan="9" class="muted">No measure matches the current filters.</td></tr>')+'</tbody></table></div></section>';
+}
+
+/* Summary */
+function aggregate(measures,keyFn){
+  const out=new Map();
+  const blankCell=()=>{const o={};for(const b of BAL){o[b]={};for(const y of YEARS)o[b][y]={sum:0,n:0,blank:0}}return o};
+  for(const m of measures){
+    const k=keyFn(m)||'_none';let o=out.get(k);if(!o){o={m:new Set(),rows:0,v:blankCell()};out.set(k,o)}o.m.add(m.id);
+    for(const r of IDX.meaRows.get(m.id)||[]){if(r.match_status==='excluded')continue;o.rows++;
+      for(const b of BAL)for(const y of YEARS){const v=val(r,b,y),c=o.v[b][y];if(v==null)c.blank++;else{c.sum+=v;c.n++}}}
+  }
+  return out;
+}
+const tot=c=>c.n?round(c.sum):null;
+const csrKey=m=>{const c=live(m.csr);return c&&c.primary?c.primary.csr:null};
+const minKey=m=>{const t=live(m.ministry);return t?t.primary:null};
+const areaKey=m=>{const t=live(m.thematic);return t?t.primary:null};
+function aggTable(map,order,label){
+  const b=S.bal;
+  const keys=[...order.filter(k=>map.has(k)),...(map.has('_none')?['_none']:[])];
+  if(!keys.length)return '<p class="small muted">Nothing to aggregate yet.</p>';
+  const tr=keys.map(k=>{const o=map.get(k);const bl=YEARS.reduce((s,y)=>s+o.v[b][y].blank,0);
+    return '<tr><td>'+esc(k==='_none'?'Not yet classified':label(k))+'</td>'+YEARS.map(y=>{const v=tot(o.v[b][y]);return v==null?'<td class="num blank">—</td>':'<td class="num">'+fmt(v)+'</td>'}).join('')+'<td class="num">'+o.m.size+'</td><td class="num">'+o.rows+'</td><td class="num">'+bl+'</td></tr>'}).join('');
+  return '<div class="tscroll"><table><thead><tr><th></th>'+YEARS.map(y=>'<th class="num">'+esc(y)+'</th>').join('')+'<th class="num">Measures</th><th class="num">Fiscal rows</th><th class="num">Blank inputs</th></tr></thead><tbody>'+tr+'</tbody><caption>'+esc(balL(b))+' – '+esc((IDX.bal.get(b)||{}).basis||'')+'; '+esc(D.meta.unit_default||'')+'. Primary classification only, so each fiscal row is counted once. Blank inputs are excluded from totals, not treated as zero.</caption></table></div>';
+}
+function vSummary(ms){
+  const balSel='<div class="balsel" role="group" aria-label="Balance">'+BAL.map(b=>'<button type="button" data-bal="'+b+'" aria-pressed="'+(S.bal===b)+'" title="'+esc(balL(b))+'">'+b+'</button>').join('')+'</div>';
+  const byArea=aggregate(ms,areaKey),byCsr=aggregate(ms,csrKey),byMin=aggregate(ms,minKey);
+  const recs=REF.csr_framework.recommendations||[];
+  const high=ms.filter(m=>{const r=live(m.relevance);return r&&r.value==='high'});
+  const flagged=ms.filter(lpOn);
+  const mlist=(arr,fn)=>arr.length?'<ul style="padding-left:18px;margin:6px 0">'+arr.map(m=>'<li><button type="button" class="chip" data-mea="'+esc(m.id)+'">'+esc(m.id)+'</button> '+esc(m.title_en)+(fn?' <span class="small muted">'+fn(m)+'</span>':'')+'</li>').join('')+'</ul>':'<p class="small muted">None'+(D.measures.length?' under the current filters.':' yet.')+'</p>';
+  const o=D.orientation;
+  return '<section class="panel"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><h2>Summary</h2>'+balSel+'<span class="small muted">'+esc(balL(S.bal))+'</span></div>'+
+    '<div class="sec"><h3>Effects by thematic area</h3>'+aggTable(byArea,REF.thematic_areas.map(a=>a.id),areaL)+'</div>'+
+    '<div class="sec"><h3>Effects by ministry</h3>'+((REF.ministries||[]).length?aggTable(byMin,REF.ministries.map(x=>x.id),minL):'<p class="small muted">Ministry list not loaded yet.</p>')+'</div>'+
+    '<div class="sec"><h3>Effects by 2026 CSR</h3>'+(recs.length?aggTable(byCsr,recs.map(c=>c.id),k=>{const c=IDX.csr.get(k);return c?'CSR '+c.number+(c.title?' – '+c.title:''):k}):'<p class="small muted">CSR text not loaded yet; it will be added from the text you provide in the chat.</p>')+'</div>'+
+    '<div class="sec"><h3>Main measures (high relevance)</h3>'+mlist(high)+'</div>'+
+    '<div class="sec"><h3>Flagged: '+esc(REF.low_priority.label)+'</h3>'+mlist(flagged,m=>esc((live(m.low_priority).criteria||[]).join(', ')))+'</div>'+
+    '<div class="sec"><h3>Overall orientation of the package</h3>'+(o&&o.status!=='not started'&&o.text_en?'<p>'+esc(o.text_en)+'</p><div class="small muted">Status: '+esc(o.status)+'</div>':'<p class="small muted">Not started. Descriptive and non-partisan; computed from the fiscal rows and measure profiles once classification is complete (revenue vs expenditure, structural vs one-off, main beneficiaries, weight of financing measures).</p>')+'</div></section>';
+}
+
+/* Method & sources */
+function vMethod(){
+  const src=D.sources.length?'<div class="tscroll"><table><thead><tr><th>ID</th><th>Kind</th><th>Source</th><th>Pages</th><th>Retrieved</th><th>Status</th></tr></thead><tbody>'+D.sources.map(s=>'<tr><td class="mono">'+esc(s.id)+'</td><td class="small">'+esc((IDX.kind.get(s.kind)||{}).label_en||s.kind)+'</td><td>'+(s.url?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.label_en||s.label_it)+'</a>':esc(s.label_en||s.label_it||s.file))+(s.label_it&&s.label_en?'<div class="small muted" lang="it">'+esc(s.label_it)+'</div>':'')+(s.note?'<div class="small muted">'+esc(s.note)+'</div>':'')+'</td><td class="small">'+esc(s.pages||'')+'</td><td class="small">'+esc(s.retrieved||'')+'</td><td class="small">'+esc((IDX.sstat.get(s.status)||{}).label_en||s.status)+(s.duplicate_of?' '+esc(s.duplicate_of):'')+'</td></tr>').join('')+'</tbody></table></div>':'<p class="small muted">No source registered yet. Awaiting: bill text (Section I); Technical Report and summary table of financial effects; parliamentary dossiers if available; 2026 CSR text (provided in the chat).</p>';
+  const conv=Object.entries(SCHEMA.conventions).filter(([k,v])=>typeof v==='string').map(([k,v])=>'<dt>'+esc(k.replace(/_/g,' '))+'</dt><dd>'+esc(v)+'</dd>').join('');
+  const checks=Object.entries(D.checks||{});
+  return '<section class="panel"><h2>Method &amp; sources</h2><p class="small muted">Schema '+esc(SCHEMA.schema_version)+' · reference data '+esc(REF.version_date)+' · methodology: docs/PROJECT_BRIEF.md</p>'+
+    '<div class="sec"><h3>Sources</h3>'+src+'</div>'+
+    '<div class="sec"><h3>Conventions</h3><dl class="kv">'+conv+'</dl></div>'+
+    '<div class="sec"><h3>Balances</h3><div class="tscroll"><table><thead><tr><th>ID</th><th>Name</th><th>Basis</th><th>Perimeter</th></tr></thead><tbody>'+REF.balances.map(b=>'<tr><td class="mono">'+b.id+'</td><td>'+esc(b.name_en)+' <span class="muted" lang="it">('+esc(b.name_it)+')</span></td><td>'+esc(b.basis)+'</td><td>'+esc(b.perimeter)+'</td></tr>').join('')+'</tbody><caption>'+esc(REF.balances_note)+'</caption></table></div></div>'+
+    '<div class="sec"><h3>Thematic areas</h3><dl class="kv">'+REF.thematic_areas.map(a=>'<dt class="mono">'+a.id+'</dt><dd><b>'+esc(a.label)+'</b> – '+esc(a.scope)+'</dd>').join('')+'</dl></div>'+
+    '<div class="sec"><h3>Relevance <span class="small muted">('+esc(REF.relevance_scale.status)+')</span></h3><dl class="kv">'+REF.relevance_scale.criteria.map(c=>'<dt>'+esc(c.label)+'</dt><dd>'+esc(c.question)+'</dd>').join('')+REF.relevance_scale.levels.map(l=>'<dt class="lvl-'+l.id+'">'+l.id+'</dt><dd>'+esc(l.definition)+'</dd>').join('')+'<dt>Thresholds</dt><dd>'+esc(REF.relevance_scale.thresholds.status)+' – '+esc(REF.relevance_scale.thresholds.note)+'</dd></dl></div>'+
+    '<div class="sec"><h3>'+esc(REF.low_priority.label)+'</h3><p class="small">'+esc(REF.low_priority.note)+'</p><dl class="kv">'+REF.low_priority.criteria.map(c=>'<dt class="mono">'+c.id+'</dt><dd><b>'+esc(c.label)+'</b> – '+esc(c.definition)+' <span class="small muted">Evidence: '+esc(c.evidence_required)+'</span></dd>').join('')+'</dl></div>'+
+    '<div class="sec"><h3>2026 Country-Specific Recommendations</h3><p class="small">Status: '+esc(REF.csr_framework.status)+'. '+esc(REF.csr_framework.source.note)+'</p><dl class="kv">'+REF.csr_alignment_scale.map(a=>'<dt>'+esc(a.id.replace(/_/g,' '))+'</dt><dd>'+esc(a.definition)+'</dd>').join('')+'</dl><p class="small muted">'+esc(REF.csr_alignment_note)+'</p></div>'+
+    '<div class="sec"><h3>Checks</h3>'+(checks.length?'<dl class="kv">'+checks.map(([k,c])=>'<dt>'+esc(k)+'</dt><dd>'+esc(c.result)+' – '+esc(c.text)+'</dd>').join('')+'</dl>':'<p class="small muted">No check run yet.</p>')+'</div>'+
+    '<div class="sec"><h3>Open uncertainties</h3>'+(D.uncertainties.length?'<ul>'+D.uncertainties.map(u=>'<li><span class="mono small">'+esc(u.id)+'</span> '+esc(u.text)+(u.resolved?' <span class="small muted">– resolved '+esc(u.resolved)+': '+esc(u.resolution||'')+'</span>':'')+'</li>').join('')+'</ul>':'<p class="small muted">None recorded.</p>')+'</div></section>';
+}
+
+/* ---------- QA ---------- */
+function qaRows(){
+  const out=[],tol=Number(D.meta.reconciliation_tolerance||0);
+  const used=D.fiscal_rows.filter(r=>r.match_status!=='excluded');
+  for(const t of D.source_totals){
+    let sum=0,n=0,blank=0;const y=String(t.year);
+    for(const r of used){const v=val(r,t.balance,y);if(v==null)blank++;else{sum+=v;n++}}
+    const s=n?round(sum):null,diff=(s==null||t.value==null)?null:round(s-Number(t.value));
+    out.push(['Reconciliation',t.label_en||t.label_it||'Source total',t.balance,t.year,s,t.value??null,diff,diff==null?'not computable':(Math.abs(diff)<=tol?'match':'difference'),['Blank inputs: '+blank,[t.src,t.table,t.page&&'p. '+t.page].filter(Boolean).join(', ')].filter(Boolean).join('; source ')]);
+  }
+  if(!D.source_totals.length)out.push(['Reconciliation','No source totals recorded yet','','',null,null,null,'not run','']);
+  for(const r of D.fiscal_rows)if(r.match_status!=='matched'||!r.measure)out.push(['Fiscal row not matched to a measure',r.id,'','',null,null,null,r.match_status||'unmatched',(r.row_label_en||r.row_label_it||'')+(r.note?' – '+r.note:'')]);
+  for(const m of D.measures){
+    if(!(m.refs||[]).length)out.push(['Measure without legal reference',m.id,'','',null,null,null,'check',m.title_en||'']);
+    for(const id of m.fiscal_rows||[]){const r=IDX.row.get(id);if(!r)out.push(['Link inconsistency',m.id,'','',null,null,null,'check','Fiscal row '+id+' listed by the measure does not exist']);else if(r.measure!==m.id)out.push(['Link inconsistency',m.id,'','',null,null,null,'check','Fiscal row '+id+' points to '+(r.measure||'no measure')])}
+    const l=m.low_priority;if(l&&l.value===true&&!(l.criteria||[]).length)out.push(['Low-priority flag without criterion',m.id,'','',null,null,null,'check','The criterion applied must be stated']);
+  }
+  for(const r of D.fiscal_rows)if(r.measure&&IDX.mea.has(r.measure)&&!(IDX.mea.get(r.measure).fiscal_rows||[]).includes(r.id))out.push(['Link inconsistency',r.id,'','',null,null,null,'check','Row points to '+r.measure+' but the measure does not list it']);
+  for(const [k,lab] of [['thematic','Thematic area'],['ministry','Ministry'],['relevance','Relevance'],['low_priority','Low priority'],['csr','CSR'],['profile','Profile']]){
+    const n=D.measures.filter(m=>!m[k]).length,p=D.measures.filter(m=>m[k]&&(!m[k].review||!m[k].review.status||m[k].review.status==='not_reviewed')).length;
+    out.push(['Classification status',lab,'','',null,null,null,D.measures.length?'info':'not run',D.measures.length?n+' not classified; '+p+' classified but not reviewed (of '+D.measures.length+')':'No measures yet']);
+  }
+  return out;
+}
+
+/* ---------- Excel export ---------- */
+function sheet(header,rows,widths){
+  const ws=XLSX.utils.aoa_to_sheet([header,...rows]); /* null cells are left blank */
+  ws['!cols']=header.map((h,i)=>({wch:(widths&&widths[i])||Math.min(40,Math.max(10,String(h).length+2))}));
+  return ws;
+}
+function exportXlsx(){
+  if(!window.XLSX){toast('The spreadsheet library did not load; export is unavailable.');return}
+  const filtered=$('#xl-filtered').checked&&anyFilter();
+  const ms=filtered?D.measures.filter(passes):D.measures;
+  const mset=new Set(ms.map(m=>m.id));
+  const frows=filtered?D.fiscal_rows.filter(r=>r.measure&&mset.has(r.measure)):D.fiscal_rows;
+  const m=D.meta,L=D.law_id||'';
+  const fdesc=Object.entries(S.f).filter(([k,v])=>v).map(([k,v])=>k+'='+v).join('; ');
+  /* README */
+  const rd=[['Tool','Italy Budget Law Reader – MVP (schema '+SCHEMA.schema_version+')'],
+    ['Law',D._empty?'No budget law loaded – empty template':(m.title_en||'')+(m.title_it?' / '+m.title_it:'')],
+    ['Law ID',L],['Bill reference',m.bill_ref||''],['Stage',m.stage||''],['Bill version date',D.version_date||''],['Extraction date',m.as_of||''],['Export date',today()],
+    ['Horizon',(m.horizon||[]).join(', ')],['Unit',m.unit_default||''],['Sign convention (source)',m.sign_convention||''],
+    ['Export scope',filtered?'Filtered: '+fdesc+' ('+ms.length+' of '+D.measures.length+' measures). QA sheet covers the full file.':'All measures and all fiscal rows'],
+    ...D.sources.map(s=>['Source '+s.id,[(IDX.kind.get(s.kind)||{}).label_en||s.kind,s.label_en,s.label_it,s.url||s.file,s.pages&&'pp. '+s.pages,s.retrieved&&'retrieved '+s.retrieved,(IDX.sstat.get(s.status)||{}).label_en||s.status].filter(Boolean).join(' | ')]),
+    ['Methodology','docs/PROJECT_BRIEF.md (repository mapemar/eu-amendment-reader). Measures are seeded from the summary table of financial effects, then merged/split, then completed from the text.'],
+    ...Object.entries(SCHEMA.conventions).filter(([k,v])=>typeof v==='string').map(([k,v])=>['Convention: '+k.replace(/_/g,' '),v]),
+    ...REF.balances.map(b=>['Balance '+b.id,b.name_en+' ('+b.name_it+') – '+b.basis+' – perimeter: '+b.perimeter]),
+    ['Balances',REF.balances_note],['CSR alignment',REF.csr_alignment_note],['Low-priority flag',REF.low_priority.note],
+    ['Relevance thresholds',REF.relevance_scale.thresholds.status],['Out of scope',(m.out_of_scope||[]).join('; ')]];
+  /* Measures */
+  const cr=c=>[c?c.rationale||'':'',c?c.confidence||'':'',c?revL(c):''];
+  const mh=['Law ID','Measure ID','Title','Description','Legal references','Seed','Lineage',
+    'Thematic area (primary)','Thematic area (secondary)','Thematic – rationale','Thematic – confidence','Thematic – review',
+    'Ministry (primary)','Ministry (secondary)','Ministry – basis','Ministry – rationale','Ministry – confidence','Ministry – review',
+    'Relevance','Relevance – fiscal impact','Relevance – beneficiaries','Relevance – nature','Relevance – rationale','Relevance – confidence','Relevance – review',
+    'Low-priority flag','Low-priority criteria','Low-priority – rationale','Low-priority – confidence','Low-priority – review',
+    'CSR alignment','CSR primary','CSR secondary','CSR – rationale','CSR – confidence','CSR – review',
+    'Effect type','Duration','Beneficiaries','Profile – rationale','Profile – confidence','Profile – review','Fiscal rows'];
+  const mr=ms.map(x=>{const t=x.thematic,r=x.relevance,l=x.low_priority,c=x.csr,p=x.profile,lin=x.lineage||{};
+    return [L,x.id,x.title_en||'',x.description_en||'',(x.refs||[]).join('; '),x.seed||'',[(lin.merged_from||[]).length?'merged from '+lin.merged_from.join(', '):'',lin.split_from?'split from '+lin.split_from:'',lin.note||''].filter(Boolean).join('; '),
+      t?areaL(t.primary):'',t?areaL(t.secondary):'',...cr(t),
+      x.ministry?minL(x.ministry.primary):'',x.ministry?(x.ministry.secondary||[]).map(minL).join('; '):'',x.ministry&&x.ministry.basis?String(x.ministry.basis).replace(/_/g,' '):'',...cr(x.ministry),
+      r?r.value||'':'',r&&r.criteria?r.criteria.fiscal_impact||'':'',r&&r.criteria?r.criteria.beneficiaries||'':'',r&&r.criteria?r.criteria.nature||'':'',...cr(r),
+      l?(l.value?'Yes':'No'):'',l?(l.criteria||[]).map(k=>k+' '+((IDX.lp.get(k)||{}).label||'')).join('; '):'',...cr(l),
+      c?String(c.value||'').replace(/_/g,' '):'',c?csrL(c.primary):'',c?(c.secondary||[]).map(csrL).join('; '):'',...cr(c),
+      p?effL(p.effect_type):'',p&&p.duration?(IDX.dur.get(p.duration)||{}).label_en||p.duration:'',p?(p.beneficiaries||[]).map(b=>(IDX.ben.get(b)||{}).label_en||b).join('; '):'',...cr(p),
+      (x.fiscal_rows||[]).join('; ')]});
+  /* Fiscal effects */
+  const area=id=>{const mm=IDX.mea.get(id);const t=mm&&live(mm.thematic);return t?areaL(t.primary):''};
+  const title=id=>{const mm=IDX.mea.get(id);return mm?mm.title_en||'':''};
+  const srcRef=r=>[r.src,r.table,r.page&&'p. '+r.page].filter(Boolean).join(', ');
+  /* Fiscal effects: one row per measure, one column per balance-year (layout of the summary table of financial effects) */
+  const artOf=x=>[...new Set((x.refs||[]).map(p=>String(p).replace(/-p\d+.*$/,'').replace(/^A/,'')))].join(', ');
+  const feh=['Law ID','Measure ID','Measure title','Thematic area (primary)','Articles',...BAL.flatMap(b=>YEARS.map(y=>b+' '+y)),'Unit','Blank inputs','Fiscal rows'];
+  const fer=ms.map(x=>{const rs=(IDX.meaRows.get(x.id)||[]).filter(r=>r.match_status!=='excluded');let blank=0;
+    const cells=BAL.flatMap(b=>YEARS.map(y=>{let sum=0,n=0;for(const r of rs){const v=val(r,b,y);if(v==null)blank++;else{sum+=v;n++}}return n?round(sum):null}));
+    return [L,x.id,x.title_en||'',area(x.id),artOf(x),...cells,m.unit_default||'',blank,rs.map(r=>r.id).join('; ')]});
+  const wh=['Law ID','Measure ID','Measure title','Thematic area (primary)','Fiscal row ID','Article','Paragraph','Description in the source (IT)','Description (EN)','Effect type','Account type',...BAL.flatMap(b=>YEARS.map(y=>b+' '+y)),'Unit','Source reference','Match status'];
+  const wr=frows.map(r=>[L,r.measure||'',title(r.measure),area(r.measure),r.id,r.article||'',r.paragraph||(r.refs||[]).join('; '),r.row_label_it||'',r.row_label_en||'',effL(r.effect_type),accL(r.account_type),...BAL.flatMap(b=>YEARS.map(y=>val(r,b,y))),r.unit||m.unit_default||'',srcRef(r),r.match_status||'']);
+  /* Summary by area and CSR */
+  const sh=['Dimension','Code','Label','Balance',...YEARS,'Measures','Fiscal rows','Blank inputs','Note'];
+  const sr=[];
+  const addAgg=(dim,map,order,lab)=>{for(const k of [...order.filter(k=>map.has(k)),...(map.has('_none')?['_none']:[])]){const o=map.get(k);
+    for(const b of BAL)sr.push([dim,k==='_none'?'':k,k==='_none'?'Not yet classified':lab(k),b,...YEARS.map(y=>tot(o.v[b][y])),o.m.size,o.rows,YEARS.reduce((s,y)=>s+o.v[b][y].blank,0),'Primary classification only; blanks excluded, not zero'])}};
+  addAgg('Thematic area',aggregate(ms,areaKey),REF.thematic_areas.map(a=>a.id),k=>(IDX.area.get(k)||{}).label||k);
+  if((REF.ministries||[]).length)addAgg('Ministry',aggregate(ms,minKey),REF.ministries.map(x=>x.id),minL);
+  addAgg('CSR (primary)',aggregate(ms,csrKey),(REF.csr_framework.recommendations||[]).map(c=>c.id),k=>{const c=IDX.csr.get(k);return c?'CSR '+c.number+(c.title?' – '+c.title:''):k});
+  /* QA */
+  const qh=['Check','Item','Balance','Year','Sum of fiscal rows','Source total','Difference','Result','Note'];
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,sheet(['Item','Value'],rd,[26,120]),'README');
+  XLSX.utils.book_append_sheet(wb,sheet(mh,mr),'Measures');
+  XLSX.utils.book_append_sheet(wb,sheet(feh,fer,[8,10,60,34,12,...BAL.flatMap(b=>YEARS.map(y=>11)),12,12,30]),'Fiscal_effects');
+  XLSX.utils.book_append_sheet(wb,sheet(sh,sr),'Summary_by_area');
+  XLSX.utils.book_append_sheet(wb,sheet(qh,qaRows(),[34,24,8,8,14,14,12,14,70]),'QA');
+  XLSX.utils.book_append_sheet(wb,sheet(wh,wr),'Source_rows');
+  const d=new Date(),stamp=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  saveWb(wb,(L||'budget-law-template')+(filtered?'-filtered':'')+'-'+stamp+'.xlsx',ms.length);
+}
+async function saveWb(wb,filename,n){
+  let dl=null;try{dl=await (window.claude&&window.claude.use?window.claude.use('downloads'):null)}catch(e){}
+  if(dl){
+    try{await dl.save({filename,data:new Blob([XLSX.write(wb,{bookType:'xlsx',type:'array'})])});toast('Saved '+filename+' ('+n+' measures).')}
+    catch(e){toast(e&&e.code==='declined'?'Export cancelled.':'Export failed: '+((e&&e.message)||'unavailable'))}
+    return;
+  }
+  try{XLSX.writeFile(wb,filename);toast('Saved '+filename+' ('+n+' measures).')}catch(e){toast('Export failed: '+((e&&e.message)||'unavailable'))}
+}
+</script>
+</body>
+</html>

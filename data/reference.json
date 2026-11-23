@@ -1,0 +1,274 @@
+{
+ "schema_version": "0.1.0",
+ "version_date": "22/11/2026",
+ "thematic_areas": [
+  {"id": "TA01", "label": "Household and labour taxation", "scope": "Personal income tax (IRPEF) rates, brackets, deductions and credits; taxation of employment income, fringe benefits and productivity bonuses; tax wedge measures acting through tax rather than contributions."},
+  {"id": "TA02", "label": "Business taxation and incentives", "scope": "Corporate income tax (IRES), regional tax on productive activities (IRAP), tax credits and super-depreciation for investment, R&D and innovation incentives, sectoral business support."},
+  {"id": "TA03", "label": "Labour and pensions", "scope": "Social contribution relief, hiring incentives, wage measures, early-retirement channels, pension indexation and pension expenditure."},
+  {"id": "TA04", "label": "Healthcare", "scope": "National Health Service (SSN) financing, health staff, waiting lists, pharmaceutical expenditure."},
+  {"id": "TA05", "label": "Education, universities and research", "scope": "Schools, school staff, universities, public research bodies, student support. Business R&D incentives go to TA02."},
+  {"id": "TA06", "label": "Public investment and infrastructure", "scope": "Transport, digital, water and building infrastructure; investment funds; co-financing of EU-funded investment."},
+  {"id": "TA07", "label": "Energy and environment", "scope": "Energy prices and bills, energy transition, climate adaptation, environmental protection."},
+  {"id": "TA08", "label": "Social policy and families", "scope": "Family allowances, birth and childcare support, poverty and inclusion measures, disability, housing support."},
+  {"id": "TA09", "label": "Subnational government", "scope": "Transfers to and fiscal rules for regions, provinces and municipalities; local finance."},
+  {"id": "TA10", "label": "Public administration and public employment", "scope": "Public-sector wage renewals, hiring, organisation and functioning of the administration."},
+  {"id": "TA11", "label": "Defence and security", "scope": "Defence, police and security forces, civil protection."},
+  {"id": "TA12", "label": "Financing measures and spending reductions", "scope": "Revenue-raising measures, spending reviews and ministerial cuts, use of funds and reserves as financing, other offsetting measures."},
+  {"id": "TA13", "label": "Other", "scope": "Measures not attributable to TA01–TA12. Use sparingly and state why."}
+ ],
+ "relevance_scale": {
+  "status": "proposed – pending approval",
+  "criteria": [
+   {"id": "fiscal_impact", "label": "Fiscal impact", "question": "How large is the effect on the balances over the three-year horizon, as given in the summary table of financial effects?"},
+   {"id": "beneficiaries", "label": "Number of beneficiaries", "question": "How broad is the population of households, firms or bodies affected, as stated in the bill, the Technical Report or the dossiers?"},
+   {"id": "nature", "label": "Structural or temporary", "question": "Is the measure permanent, temporary (limited years) or one-off?"}
+  ],
+  "levels": [
+   {"id": "high", "definition": "Material on at least two of the three criteria, or very large fiscal impact on its own."},
+   {"id": "medium", "definition": "Material on one criterion."},
+   {"id": "low", "definition": "Not material on any criterion."}
+  ],
+  "thresholds": {
+   "status": "to be agreed",
+   "fiscal_impact_material_eur_million": null,
+   "fiscal_impact_very_large_eur_million": null,
+   "balance_for_threshold": null,
+   "beneficiaries_material": null,
+   "note": "Thresholds are not set until approved. Until then the rationale states the figures relied on."
+  }
+ },
+ "low_priority": {
+  "label": "Low priority / low expected effectiveness",
+  "note": "Separate flag, independent of relevance. The flag is descriptive and states the criterion applied; it is not a judgement on the policy objective. The term 'waste' is not used.",
+  "criteria": [
+   {"id": "LP1", "label": "Small amount and narrow beneficiary base", "definition": "Small fiscal amount combined with a narrowly defined group of beneficiaries.", "evidence_required": "Amount from the summary table; beneficiary definition from the text or the Technical Report."},
+   {"id": "LP2", "label": "Micro-sectoral or local purpose", "definition": "Funding or relief directed at a single small sector, body, event or locality.", "evidence_required": "Wording of the provision identifying the sector, body, event or locality."},
+   {"id": "LP3", "label": "Repeated extension without evaluation", "definition": "Extension or refinancing of an existing measure with no evaluation cited in the bill, the Technical Report or the dossiers.", "evidence_required": "Reference to the measure being extended; absence of an evaluation in the documents reviewed."},
+   {"id": "LP4", "label": "Overlap with existing instruments", "definition": "Objective and beneficiaries substantially covered by another instrument in force or in the same bill.", "evidence_required": "Identification of the overlapping instrument and its legal reference."},
+   {"id": "LP5", "label": "No result indicators", "definition": "No target, indicator or monitoring provision linked to the measure.", "evidence_required": "Review of the provision and the Technical Report for targets or monitoring."}
+  ]
+ },
+ "ministries": [
+  {
+   "id": "MIN01",
+   "label_it": "Ministero dell’economia e delle finanze",
+   "label_en": "Ministry of Economy and Finance",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 2 – Stato di previsione del Ministero dell’economia e delle finanze"
+  },
+  {
+   "id": "MIN02",
+   "label_it": "Ministero delle imprese e del made in Italy",
+   "label_en": "Ministry of Enterprises and Made in Italy",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 3 – Stato di previsione del Ministero delle imprese e del made in Italy"
+  },
+  {
+   "id": "MIN03",
+   "label_it": "Ministero del lavoro e delle politiche sociali",
+   "label_en": "Ministry of Labour and Social Policies",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 4 – Stato di previsione del Ministero del lavoro e delle politiche sociali"
+  },
+  {
+   "id": "MIN04",
+   "label_it": "Ministero della giustizia",
+   "label_en": "Ministry of Justice",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 5 – Stato di previsione del Ministero della giustizia"
+  },
+  {
+   "id": "MIN05",
+   "label_it": "Ministero degli affari esteri e della cooperazione internazionale",
+   "label_en": "Ministry of Foreign Affairs and International Cooperation",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 6 – Stato di previsione del Ministero degli affari esteri e della cooperazione internazionale"
+  },
+  {
+   "id": "MIN06",
+   "label_it": "Ministero dell’istruzione e del merito",
+   "label_en": "Ministry of Education and Merit",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 7 – Stato di previsione del Ministero dell’istruzione e del merito"
+  },
+  {
+   "id": "MIN07",
+   "label_it": "Ministero dell’interno",
+   "label_en": "Ministry of the Interior",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 8 – Stato di previsione del Ministero dell’interno"
+  },
+  {
+   "id": "MIN08",
+   "label_it": "Ministero dell’ambiente e della sicurezza energetica",
+   "label_en": "Ministry of the Environment and Energy Security",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 9 – Stato di previsione del Ministero dell’ambiente e della sicurezza energetica"
+  },
+  {
+   "id": "MIN09",
+   "label_it": "Ministero delle infrastrutture e dei trasporti",
+   "label_en": "Ministry of Infrastructure and Transport",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 10 – Stato di previsione del Ministero delle infrastrutture e dei trasporti"
+  },
+  {
+   "id": "MIN10",
+   "label_it": "Ministero dell’università e della ricerca",
+   "label_en": "Ministry of University and Research",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 11 – Stato di previsione del Ministero dell’università e della ricerca"
+  },
+  {
+   "id": "MIN11",
+   "label_it": "Ministero della difesa",
+   "label_en": "Ministry of Defence",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 12 – Stato di previsione del Ministero della difesa"
+  },
+  {
+   "id": "MIN12",
+   "label_it": "Ministero dell’agricoltura, della sovranità alimentare e delle foreste",
+   "label_en": "Ministry of Agriculture, Food Sovereignty and Forests",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 13 – Stato di previsione del Ministero dell’agricoltura, della sovranità alimentare e delle foreste"
+  },
+  {
+   "id": "MIN13",
+   "label_it": "Ministero della cultura",
+   "label_en": "Ministry of Culture",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 14 – Stato di previsione del Ministero della cultura"
+  },
+  {
+   "id": "MIN14",
+   "label_it": "Ministero della salute",
+   "label_en": "Ministry of Health",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 15 – Stato di previsione del Ministero della salute"
+  },
+  {
+   "id": "MIN15",
+   "label_it": "Ministero del turismo",
+   "label_en": "Ministry of Tourism",
+   "src_ref": "AC 3174, Tomo II, index: Tabella n. 16 – Stato di previsione del Ministero del turismo"
+  }
+ ],
+ "ministries_note": "Loaded 23/11/2026 from the index of AC 3174 Tomo II (Section II, Tabelle n. 2-16: the 15 spending states of forecast; Tabella n. 1 is the revenue statement and is not a ministry). Titles are verbatim; English renderings are ours. Tomo II of AC 3174-bis is stated to be identical to the original (inventory), not re-checked here. Measures whose competent body sits outside these 15 (e.g. Presidency of the Council, ministers without portfolio, agencies) are assigned to the supervising ministry with basis competence_inferred, or flagged in the rationale.",
+ "ministry_basis": [
+  {"id": "named_in_provision", "definition": "The provision itself names the ministry (or its administration) as responsible for, or as the allocation point of, the measure."},
+  {"id": "funded_in_state_budget", "definition": "The provision allocates the resources to the appropriations (stato di previsione) of that ministry, without naming it as implementer."},
+  {"id": "competence_inferred", "definition": "Neither of the above; the competent ministry follows from the subject matter and the legislation cited. Confidence is capped at medium and the rationale cites the legal basis."}
+ ],
+ "csr_framework": {
+  "status": "loaded (recommendations); subcategories pending approval",
+  "year": 2026,
+  "source": {
+   "label": "Council Recommendation on the economic, social, employment, structural and budgetary policies of Italy (2026 CSRs)",
+   "provided_by": "User, in the Project (file 'CSR 2026.pdf')",
+   "date": "03/07/2026",
+   "note": "Council of the EU document 11124/26 (ECOFIN 914), 'Council Recommendation on the economic, social, employment, structural and budgetary policies of Italy', based on COM(2026) 212 final. Operative text (recommendations 1-6) loaded programmatically from the PDF, pp. 29-31, verbatim apart from line-break and hyphenation normalisation. Titles and subcategories are not part of the source and are left empty until proposed and approved."
+  },
+  "recommendations": [
+   {
+    "id": "CSR2026-1",
+    "number": 1,
+    "title": null,
+    "text": "Ensure that net expenditure respects the corrective path recommended by the Council on 21 January 2025 given the deviation recorded by 2025 by the Commission vis-à-vis the recommended net expenditure ceiling. Reinforce overall defence and security spending and readiness, while ensuring debt sustainability and spending efficiency, as well as gradually adapting the budget to sustain structurally higher defence spending. Ensure that measures taken to mitigate the impact of the hike in energy prices are temporary, targeted at protecting vulnerable households or at addressing the needs of energy-intensive firms, preserve incentives for energy savings and that their fiscal cost is compatible with the commitments under the EU fiscal framework. Continue to implement the set of reforms and investments underpinning the extended adjustment period as recommended by the Council on 21 January 2025. In line with fiscal sustainability objectives, make the tax system more conducive to sustainable growth, while ensuring fairness, including by further fighting tax evasion and reducing remaining tax expenditures, including those related to value added tax and environmentally harmful subsidies. Update cadastral values, building on the medium-term fiscal-structural plan commitment, as part of a broader review of housing-related policies. Step up efforts to improve the efficiency and effectiveness of public expenditure. Address demographic challenges to mitigate the effects on potential growth and on the sustainability of the pension system, also by attracting and retaining high-quality workforce, and by encouraging older workforce participation especially in the South.",
+    "subcategories": []
+   },
+   {
+    "id": "CSR2026-2",
+    "number": 2,
+    "title": null,
+    "text": "Ensure continuity of reforms and investments implemented under the Recovery and Resilience Facility. Accelerate efforts to implement cohesion policy programmes, building, where appropriate, on the reallocation to strategic priorities and flexibilities agreed in the context of the mid-term review of the cohesion policy framework.",
+    "subcategories": []
+   },
+   {
+    "id": "CSR2026-3",
+    "number": 3,
+    "title": null,
+    "text": "Support research and innovation, including by strengthening innovation procurement, increasing universities' focus on the commercialisation of research and researchers' career. Promote the mobilization of savings, capital markets' expansion, and firms' growth and aggregation, including by supporting the role of corporate and institutional investors in venture capital and private equity, as well as by facilitating new listings and issuance of corporate bonds. Implement an industrial strategy with the aim to also reduce territorial disparities, by streamlining current policy measures and taking into account key infrastructure projects.",
+    "subcategories": []
+   },
+   {
+    "id": "CSR2026-4",
+    "number": 4,
+    "title": null,
+    "text": "Further increase the effectiveness of the public administration and further strengthen administrative capacity, particularly at local level and in the South. Further reduce the backlog and disposition time of the justice system. Address remaining restrictions to competition, including in the transport and electricity sectors and tackle remaining barriers to free movement of goods.",
+    "subcategories": []
+   },
+   {
+    "id": "CSR2026-5",
+    "number": 5,
+    "title": null,
+    "text": "Accelerate electrification and intensify efforts for the deployment of renewable energy and storage, including by fully implementing permitting reforms, particularly at sub-national level, and investing in the electricity grid. Continue to address climate-related risks and mitigate their economic impact, including through more institutional coordination, nature-based solutions and climate insurance coverage. Tackle remaining inefficiencies in water and waste management by reducing infrastructural gaps in particular in Southern regions.",
+    "subcategories": []
+   },
+   {
+    "id": "CSR2026-6",
+    "number": 6,
+    "title": null,
+    "text": "Continue to promote job quality by further reducing labour market segmentation and supporting effective collective bargaining outcomes and adequate wages. Support labour market participation, including by improving active labour market policies and access to affordable and quality care services, taking into account territorial disparities. Keep-up the efforts to tackle undeclared work. Continue promoting VET and adult learning, including by strengthening in-work training and skills intelligence. Improve educational outcomes, focusing on basic skills, and the labour market relevance of tertiary education. Improve timely access to affordable healthcare, also by tackling shortages in key health professions. Continue to improve the coverage and adequacy of social protection as well as access to social services for people in vulnerable situations, notably children, while maintaining fiscal sustainability.",
+    "subcategories": []
+   }
+  ]
+ },
+ "csr_alignment_scale": [
+  {"id": "explicit", "definition": "The measure acts directly on the content of the recommendation or subcategory, and the link is visible in the provision or the Technical Report."},
+  {"id": "indirect", "definition": "The measure contributes to the recommendation through a plausible but not explicit channel."},
+  {"id": "weak_or_absent", "definition": "Link marginal or not identifiable; or the measure runs counter to the recommendation (stated in the rationale)."}
+ ],
+ "csr_alignment_note": "Alignment does not equal effectiveness.",
+ "confidence_scale": [
+  {"id": "high", "definition": "Directly supported by the wording of the provision or the Technical Report."},
+  {"id": "medium", "definition": "Supported by the sources but requires interpretation."},
+  {"id": "low", "definition": "Limited evidence; human review needed before use."}
+ ],
+ "review_status": [
+  {"id": "not_reviewed", "definition": "Machine classification, not yet checked."},
+  {"id": "confirmed", "definition": "Checked by a reviewer and kept unchanged."},
+  {"id": "amended", "definition": "Checked by a reviewer and changed; previous value recorded in the note."},
+  {"id": "rejected", "definition": "Checked and discarded; the classification is not used in summaries."}
+ ],
+ "balances": [
+  {"id": "SNF", "name_it": "Saldo netto da finanziare", "name_en": "Net balance to be financed", "basis": "Budgetary competence (financial accounting)", "perimeter": "State budget", "note": "Recorded as in the source table."},
+  {"id": "FAB", "name_it": "Fabbisogno", "name_en": "Borrowing requirement", "basis": "Cash", "perimeter": "As stated in the source table (recorded at extraction)", "note": "Recorded as in the source table."},
+  {"id": "IN", "name_it": "Indebitamento netto", "name_en": "Net borrowing", "basis": "ESA 2010 accrual", "perimeter": "General government", "note": "Recorded as in the source table."}
+ ],
+ "balances_note": "The three balances use different perimeters and accounting bases. They are never added together or substituted for each other.",
+ "enums": {
+  "effect_type": [
+   {"id": "higher_revenue", "label_it": "Maggiori entrate", "label_en": "Higher revenue"},
+   {"id": "lower_revenue", "label_it": "Minori entrate", "label_en": "Lower revenue"},
+   {"id": "higher_expenditure", "label_it": "Maggiori spese", "label_en": "Higher expenditure"},
+   {"id": "lower_expenditure", "label_it": "Minori spese", "label_en": "Lower expenditure"}
+  ],
+  "account_type": [
+   {"id": "current", "label_it": "Correnti", "label_en": "Current"},
+   {"id": "capital", "label_it": "In conto capitale", "label_en": "Capital"},
+   {"id": "not_stated", "label_it": null, "label_en": "Not stated in the source"}
+  ],
+  "duration": [
+   {"id": "structural", "label_en": "Structural (permanent)"},
+   {"id": "temporary", "label_en": "Temporary (limited number of years)"},
+   {"id": "one_off", "label_en": "One-off"},
+   {"id": "not_determined", "label_en": "Not determined from the sources"}
+  ],
+  "beneficiaries": [
+   {"id": "households", "label_en": "Households"},
+   {"id": "firms", "label_en": "Firms"},
+   {"id": "public_administration", "label_en": "Public administration"},
+   {"id": "regions_municipalities", "label_en": "Regions and municipalities"},
+   {"id": "other", "label_en": "Other"},
+   {"id": "not_determined", "label_en": "Not determined from the sources"}
+  ],
+  "seed": [
+   {"id": "summary_table", "label_en": "Seeded from a row of the summary table of financial effects"},
+   {"id": "text_only", "label_en": "Recovered from the text; no row in the summary table"},
+   {"id": "merge", "label_en": "Result of merging candidate measures"},
+   {"id": "split", "label_en": "Result of splitting a candidate measure"}
+  ],
+  "source_kind": [
+   {"id": "bill_text", "label_en": "Text of the bill"},
+   {"id": "technical_report", "label_en": "Technical Report (Relazione tecnica)"},
+   {"id": "summary_table", "label_en": "Summary table of financial effects (prospetto riepilogativo)"},
+   {"id": "dossier", "label_en": "Parliamentary research and budget service dossier"},
+   {"id": "csr_text", "label_en": "Country-Specific Recommendations text"},
+   {"id": "other", "label_en": "Other"}
+  ],
+  "source_status": [
+   {"id": "extract", "label_en": "Extract information"},
+   {"id": "disregard", "label_en": "Disregard document (reason recorded)"},
+   {"id": "pending", "label_en": "Pending decision"},
+   {"id": "access_blocked", "label_en": "Access blocked – source unavailable"},
+   {"id": "duplicate_of", "label_en": "Duplicate of another source"}
+  ]
+ }
+}
