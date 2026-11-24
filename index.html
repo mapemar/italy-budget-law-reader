@@ -306,7 +306,7 @@ function vArticles(){
       '</section>'}).join('');
   const amids=[...new Set((cur.paragraphs||[]).flatMap(p=>IDX.parMea.get(p)||[]))];
   const arows=[...new Map((cur.paragraphs||[]).flatMap(p=>IDX.parRows.get(p)||[]).map(r=>[r.id,r])).values()];
-  const ahead=(amids.length?'<div class="chips"><span class="eyebrow">Measure</span>'+amids.map(id=>{const m=IDX.mea.get(id);return '<button type="button" class="chip" data-mea="'+esc(id)+'">'+esc(id)+' '+esc(m?m.title_en:'')+(m&&lpOn(m)?' <span class="flag">low priority</span>':'')+'</button>'}).join('')+'</div>':'<div class="small muted">No measure linked yet.</div>')+(arows.length?'<h3>Financial effects (whole article)</h3>'+fiscTable(arows,{measure:true}):'')+'<h3>Text of the article</h3>';
+  const ahead=(amids.length?'<div class="chips"><span class="eyebrow">Measure</span>'+amids.map(id=>{const m=IDX.mea.get(id);return '<button type="button" class="chip" data-mea="'+esc(id)+'">'+esc(id)+' '+esc(m?m.title_en:'')+(m&&lpOn(m)?' <span class="flag">low priority</span>':'')+'</button>'}).join('')+'</div>':'<div class="small muted">No measure linked yet.</div>')+(arows.length?'<h3>Financial effects (whole article)</h3>'+fiscTable(arows,{measure:true}):'')+'<h3>Legal history</h3>'+(amids.length?amids.map(id=>legalHist(IDX.mea.get(id))).join(''):'<p class="small muted">No measure linked yet.</p>')+'<h3>Text of the article</h3>';
   return '<div class="two"><nav class="panel alist" aria-label="Articles">'+list+'</nav><article class="panel"><div class="eyebrow">Article '+esc(cur.number)+(cur.title_part?' · '+esc(cur.title_part):'')+'</div><h2>'+esc(cur.heading_en||'')+'</h2>'+(cur.heading_it?'<div class="muted" lang="it">'+esc(cur.heading_it)+'</div>':'')+(cur.page?'<div class="small muted">Source p. '+esc(cur.page)+'</div>':'')+ahead+pars+'</article></div>';
 }
 
@@ -334,6 +334,7 @@ function measureDetail(m){
     '</div><h3>Legal history</h3>'+legalHist(m)+'<h3>Financial effects</h3>'+fiscTable(rows)+'</section>';
 }
 function legalHist(m){
+  if(!m)return '';
   const h=m.legal_history;
   if(!h)return '<p class="small muted">Not yet compiled for this measure.</p>';
   const st={complete:'Complete',partial:'Partial (some texts not retrieved)',not_found:'Not found',not_applicable:'No existing act amended'}[h.status]||h.status;
