@@ -287,6 +287,16 @@ function fiscTable(rows,opt={}){
   return '<div class="tscroll"><table><caption>'+esc(D.meta.unit_default||'')+'; signs as in the source'+(D.meta.sign_convention?' ('+esc(D.meta.sign_convention)+')':'')+'. — = not given in the source (not zero). SNF, FAB and IN are separate balances and are not additive.</caption><thead>'+h1+h2+'</thead><tbody>'+body+'</tbody></table></div>';
 }
 
+/* Article-level total: one line per measure; component rows of the summary table are kept below, collapsed. Provisional sign rule (U034): rows coded E/S=S (expenditure) are subtracted. */
+function fiscTotal(rows){
+  if(!rows.length)return fiscTable(rows);
+  const sg=r=>/E\/S=S/.test(r.note||'')?-1:1;
+  const tot=(b,y)=>{let n=0,t=0;for(const r of rows){const v=val(r,b,y);if(v!=null){t+=sg(r)*v;n++}}return n?Math.round(t*10)/10:null};
+  const h1='<tr><th rowspan="2">Total</th>'+BAL.map(b=>'<th class="bg" colspan="'+YEARS.length+'" title="'+esc(balL(b)+' – '+(IDX.bal.get(b)||{}).basis)+'">'+b+'</th>').join('')+'</tr>';
+  const h2='<tr>'+BAL.map(()=>YEARS.map((y,i)=>'<th class="num'+(i===0?' bg':'')+'">'+esc(y)+'</th>').join('')).join('')+'</tr>';
+  const body='<tr><td><b>Whole article</b><div class="small muted">'+rows.length+' rows of the summary table</div></td>'+BAL.map(b=>YEARS.map((y,i)=>{const v=tot(b,y);return v==null?'<td class="num blank'+(i===0?' bl':'')+'" title="Not given in the source">—</td>':'<td class="num'+(i===0?' bl':'')+'"><b>'+fmt(v)+'</b></td>'}).join('')).join('')+'</tr>';
+  return '<div class="tscroll"><table><caption>'+esc(D.meta.unit_default||'')+'. Provisional sum of the rows below: rows coded E/S=S (expenditure) are subtracted, all others added as printed (sign convention still to be confirmed, U034). — = no row gives a value (not zero).</caption><thead>'+h1+h2+'</thead><tbody>'+body+'</tbody></table></div><details class="lh-item"><summary>Component rows of the summary table ('+rows.length+')</summary>'+fiscTable(rows,{measure:true})+'</details>';
+}
 /* Articles navigator */
 function vArticles(){
   if(!D.articles.length)return emptyP('<b>Article navigator.</b> No article text loaded yet. Once the bill text (Section I) is extracted, each article and paragraph appears here with its full text, linked measures and financial effects.');
@@ -306,7 +316,7 @@ function vArticles(){
       '</section>'}).join('');
   const amids=[...new Set((cur.paragraphs||[]).flatMap(p=>IDX.parMea.get(p)||[]))];
   const arows=[...new Map((cur.paragraphs||[]).flatMap(p=>IDX.parRows.get(p)||[]).map(r=>[r.id,r])).values()];
-  const ahead=(amids.length?'<div class="chips"><span class="eyebrow">Measure</span>'+amids.map(id=>{const m=IDX.mea.get(id);return '<button type="button" class="chip" data-mea="'+esc(id)+'">'+esc(id)+' '+esc(m?m.title_en:'')+(m&&lpOn(m)?' <span class="flag">low priority</span>':'')+'</button>'}).join('')+'</div>':'<div class="small muted">No measure linked yet.</div>')+(arows.length?'<h3>Financial effects (whole article)</h3>'+fiscTable(arows,{measure:true}):'')+'<h3>Legal history</h3>'+(amids.length?amids.map(id=>legalHist(IDX.mea.get(id))).join(''):'<p class="small muted">No measure linked yet.</p>')+'<h3>Text of the article</h3>';
+  const ahead=(amids.length?'<div class="chips"><span class="eyebrow">Measure</span>'+amids.map(id=>{const m=IDX.mea.get(id);return '<button type="button" class="chip" data-mea="'+esc(id)+'">'+esc(id)+' '+esc(m?m.title_en:'')+(m&&lpOn(m)?' <span class="flag">low priority</span>':'')+'</button>'}).join('')+'</div>':'<div class="small muted">No measure linked yet.</div>')+(arows.length?'<h3>Financial effects (whole article)</h3>'+fiscTotal(arows):'')+'<h3>Legal history</h3>'+(amids.length?amids.map(id=>legalHist(IDX.mea.get(id))).join(''):'<p class="small muted">No measure linked yet.</p>')+'<h3>Text of the article</h3>';
   return '<div class="two"><nav class="panel alist" aria-label="Articles">'+list+'</nav><article class="panel"><div class="eyebrow">Article '+esc(cur.number)+(cur.title_part?' · '+esc(cur.title_part):'')+'</div><h2>'+esc(cur.heading_en||'')+'</h2>'+(cur.heading_it?'<div class="muted" lang="it">'+esc(cur.heading_it)+'</div>':'')+(cur.page?'<div class="small muted">Source p. '+esc(cur.page)+'</div>':'')+ahead+pars+'</article></div>';
 }
 
@@ -331,7 +341,7 @@ function measureDetail(m){
     clsCard(esc(REF.low_priority.label),l,l?(l.value?'<span class="flag">Flagged</span> '+esc((l.criteria||[]).map(x=>x+' '+((IDX.lp.get(x)||{}).label||'')).join('; ')):'Not flagged'):'')+
     clsCard('2026 CSRs',c,c?esc((IDX.align.get(c.value)?c.value.replace(/_/g,' '):c.value)+' alignment')+'<div class="small">Primary: '+esc(csrL(c.primary)||'–')+'</div>'+((c.secondary||[]).length?'<div class="small">Secondary: '+esc(c.secondary.map(csrL).join('; '))+'</div>':''):'','<div class="small muted">'+esc(REF.csr_alignment_note)+'</div>')+
     clsCard('Profile (for the aggregate orientation)',p,p?esc([effL(p.effect_type),p.duration&&(IDX.dur.get(p.duration)||{}).label_en,(p.beneficiaries||[]).map(b=>(IDX.ben.get(b)||{}).label_en||b).join(', ')].filter(Boolean).join(' · ')):'')+
-    '</div><h3>Legal history</h3>'+legalHist(m)+'<h3>Financial effects</h3>'+fiscTable(rows)+'</section>';
+    '</div><h3>Legal history</h3>'+legalHist(m)+'<h3>Financial effects</h3>'+fiscTotal(rows)+'</section>';
 }
 function legalHist(m){
   if(!m)return '';
