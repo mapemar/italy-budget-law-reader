@@ -303,9 +303,11 @@ function vArticles(){
     return '<section class="para'+(p.id===S.sel?' sel':'')+'" id="para-'+esc(p.id)+'"><div class="phead"><b class="mono">'+esc(p.id)+'</b><span class="small muted">Paragraph '+esc(p.number)+(p.page?' · source p. '+esc(p.page):'')+(p.src?' · '+esc(p.src):'')+(p.has_fiscal_effects===false?' · no financial effects in the summary table':'')+'</span></div>'+
       (p.summary_en?'<div><span class="eyebrow">Summary (English)</span> '+esc(p.summary_en)+'</div>':'')+
       '<div class="eyebrow" style="margin-top:6px">Official text (Italian)</div><div class="itext" lang="it">'+esc(p.text_it||'')+'</div>'+
-      (mids.length?'<div class="chips"><span class="eyebrow">Measures</span>'+mids.map(id=>{const m=IDX.mea.get(id);return '<button type="button" class="chip" data-mea="'+esc(id)+'">'+esc(id)+' '+esc(m?m.title_en:'')+(m&&lpOn(m)?' <span class="flag">low priority</span>':'')+'</button>'}).join('')+'</div>':'<div class="small muted">No measure linked yet.</div>')+
-      (rows.length?fiscTable(rows,{measure:true}):'')+'</section>'}).join('');
-  return '<div class="two"><nav class="panel alist" aria-label="Articles">'+list+'</nav><article class="panel"><div class="eyebrow">Article '+esc(cur.number)+(cur.title_part?' · '+esc(cur.title_part):'')+'</div><h2>'+esc(cur.heading_en||'')+'</h2>'+(cur.heading_it?'<div class="muted" lang="it">'+esc(cur.heading_it)+'</div>':'')+(cur.page?'<div class="small muted">Source p. '+esc(cur.page)+'</div>':'')+pars+'</article></div>';
+      '</section>'}).join('');
+  const amids=[...new Set((cur.paragraphs||[]).flatMap(p=>IDX.parMea.get(p)||[]))];
+  const arows=[...new Map((cur.paragraphs||[]).flatMap(p=>IDX.parRows.get(p)||[]).map(r=>[r.id,r])).values()];
+  const ahead=(amids.length?'<div class="chips"><span class="eyebrow">Measure</span>'+amids.map(id=>{const m=IDX.mea.get(id);return '<button type="button" class="chip" data-mea="'+esc(id)+'">'+esc(id)+' '+esc(m?m.title_en:'')+(m&&lpOn(m)?' <span class="flag">low priority</span>':'')+'</button>'}).join('')+'</div>':'<div class="small muted">No measure linked yet.</div>')+(arows.length?'<h3>Financial effects (whole article)</h3>'+fiscTable(arows,{measure:true}):'')+'<h3>Text of the article</h3>';
+  return '<div class="two"><nav class="panel alist" aria-label="Articles">'+list+'</nav><article class="panel"><div class="eyebrow">Article '+esc(cur.number)+(cur.title_part?' · '+esc(cur.title_part):'')+'</div><h2>'+esc(cur.heading_en||'')+'</h2>'+(cur.heading_it?'<div class="muted" lang="it">'+esc(cur.heading_it)+'</div>':'')+(cur.page?'<div class="small muted">Source p. '+esc(cur.page)+'</div>':'')+ahead+pars+'</article></div>';
 }
 
 /* Measures */
