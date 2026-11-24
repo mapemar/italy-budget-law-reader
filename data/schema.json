@@ -16,7 +16,8 @@
   "signs_and_units": "Values keep the sign and unit of the source (normally EUR million). The source's sign convention is recorded once per law in meta.sign_convention and per row if it differs. No rescaling or sign change is stored in source fields.",
   "balances": "Three balances are recorded separately and never added together: SNF (saldo netto da finanziare, State budget, budgetary competence), FAB (fabbisogno, borrowing requirement, cash basis), IN (indebitamento netto, net borrowing of general government, ESA 2010 accrual). See reference.json balances.",
   "no_estimates": "No estimated, imputed or interpolated figures are stored. Fields for analytical or standardised values are reserved for later releases and are absent in 0.1.0.",
-  "classification_record": "Every classification is an object {value, rationale, confidence: high|medium|low, review: {status: not_reviewed|confirmed|amended|rejected, by, date (dd/mm/yyyy), note}}. Additional keys per dimension are listed below."
+  "classification_record": "Every classification is an object {value, rationale, confidence: high|medium|low, review: {status: not_reviewed|confirmed|amended|rejected, by, date (dd/mm/yyyy), note}}. Additional keys per dimension are listed below.",
+  "unit_of_analysis": "One article, one measure (rule of 24/11/2026). Each article is covered completely by a single record: refs lists all its paragraphs, fiscal_rows all its rows of the summary table, and the description lists the components. The id is that of the first component; earlier ids are in lineage.merged_from. Row-level detail stays in the Source_rows sheet. Articles with several distinct provisions are classified once, using the primary and secondary fields."
  },
  "files": {
   "budget-law/data/laws.json": {
@@ -54,13 +55,14 @@
     "sources": "array of {id, kind (enums.source_kind), label_it, label_en, url, file, pages, retrieved (dd/mm/yyyy), status (enums.source_status), duplicate_of?, note}",
     "articles": "array of {law_id, id, number, heading_it, heading_en, title_part (Part/Title/Chapter heading as in the bill, if any), paragraphs[paragraph ids], src (source id), page}",
     "paragraphs": "array of {law_id, id, article, number, text_it (full official text, verbatim), summary_en (short English summary, flagged as a summary), src, page, has_fiscal_effects: true|false|null (null until the summary table is matched)}",
-    "measures": "array of {law_id, id, title_en, description_en (canonical description), refs[paragraph ids] (many-to-many), fiscal_rows[fiscal row ids], seed (enums.seed), lineage {merged_from[], split_from, note}, thematic, ministry, relevance, low_priority, csr, profile}",
+    "measures": "array of article-level measure records (one per article; see conventions.unit_of_analysis): array of {law_id, id, title_en, description_en (canonical description), refs[paragraph ids] (many-to-many), fiscal_rows[fiscal row ids], seed (enums.seed), lineage {merged_from[], split_from, note}, thematic, ministry, relevance, low_priority, csr, profile}",
     "measures[].thematic": "classification record + {primary (thematic area id), secondary (thematic area id|null)}",
     "measures[].ministry": "classification record + {primary (ministry id), secondary[ministry ids], basis (ministry_basis id)}. The ministry competent for the measure: named in the provision, or where the resources sit in the State budget, or inferred from subject matter and legal basis (confidence capped at medium; the rationale cites the legal basis). One primary only; secondary only where the provision assigns a real role to a second ministry.",
     "measures[].relevance": "classification record; value: high|medium|low; + {criteria {fiscal_impact, beneficiaries, nature}: short notes per criterion}",
     "measures[].low_priority": "classification record; value: true|false; + {criteria[LP ids] (mandatory when value is true; the criterion applied is always stated)}",
     "measures[].csr": "classification record; value: alignment id (explicit|indirect|weak_or_absent); + {primary {csr, sub}|null, secondary[{csr, sub}]}. Alignment does not equal effectiveness.",
     "measures[].profile": "classification record (descriptive, used for the aggregate orientation); + {effect_type (enums.effect_type), duration (enums.duration), beneficiaries[] (enums.beneficiaries)}",
+    "measures[].legal_history": "optional. History of the legal provisions amended by the article: {status: complete|partial|not_found|not_applicable, as_of (consolidation date of the texts used), note, items: [{bill_ref (paragraph id, with the lettered or numbered point in parentheses where the item concerns one point, e.g. A20-p1(d)), amended_act {label,url}, provision, numbering_note (old/new testo unico, repealed provisions), change_type (insert|replace|repeal|words|standalone), change_summary_en, chain [{act, provision, year, what_en, source}] oldest to newest with the origin first, chain_truncated, text_before_it (text in force before the bill, copied from Normattiva or the Chamber dossier), text_after_it, text_after_basis (derived_by_applying_bill|official_consolidated), sources [{kind, ref, consolidated_at}]}]}. Texts are copied from sources, never reconstructed from memory; a text not found is null and listed in uncertainties. Shown in the Legal history panel of the measure card.",
     "fiscal_rows": "array of {law_id, id, src, table, page, row_label_it, row_label_en, article, paragraph, refs[paragraph ids], effect_type (enums.effect_type, as grouped in the source), account_type (enums.account_type), unit, sign_convention (only if it differs from meta.sign_convention), values {SNF {year: number|null}, FAB {year: number|null}, IN {year: number|null}}, measure (measure id|null), match_status: matched|unmatched|excluded, note}",
     "source_totals": "array of {law_id, label_it, label_en, balance (SNF|FAB|IN), year, value, src, table, page} – totals printed in the summary table, used only for reconciliation",
     "orientation": "{status: not started|draft|reviewed, text_en, metrics[{id, label, balance, year, value, basis_note}], rationale, review} – aggregate, descriptive and non-partisan; computed from fiscal_rows and measures, never entered by hand",
@@ -92,6 +94,16 @@
    "version": "0.1.0 (ministry classification)",
    "date": "23/11/2026",
    "change": "Added measures[].ministry classification and reference.json ministries/ministry_basis; reader filter, detail card, summary and Excel columns. Ministry list empty until loaded from Section II."
+  },
+  {
+   "version": "0.1.0 (article-level)",
+   "date": "24/11/2026",
+   "change": "Unit of analysis changed to the article: one article, one measure. 24 measures consolidated into 15 records (tools/consolidate_by_article.py); refs cover all paragraphs of the article. merge_batch.py now rejects proposals that are not article-level."
+  },
+  {
+   "version": "0.1.0 (legal history)",
+   "date": "24/11/2026",
+   "change": "Added optional measures[].legal_history and the Legal history panel in the reader (pilot on Articles 15-20)."
   }
  ]
 }

@@ -23,3 +23,6 @@ python3 -m http.server 8000
 ```
 
 Then open http://localhost:8000.
+
+## Unit of analysis
+One article, one measure: each article is covered completely by a single record (all paragraphs, all rows of the summary table). Row-level detail is kept in the `Source_rows` sheet of the Excel export.

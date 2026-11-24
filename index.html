@@ -102,6 +102,7 @@ tr.clk{cursor:pointer} tr.clk:hover td{background:var(--accent-2)} tr.on td{back
 dl.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 14px;margin:6px 0;font-size:13.5px}
 dl.kv dt{color:var(--ink-3)} dl.kv dd{margin:0}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:var(--r);font-size:13.5px;z-index:50}
+.badge{display:inline-block;border:1px solid currentColor;border-radius:10px;padding:0 8px;font-size:.85em}.lh-item{border:1px solid var(--line,#ddd);border-radius:6px;padding:8px 10px;margin:8px 0}.lh-item summary{cursor:pointer;font-weight:600}.lh-chain{margin:4px 0 8px 18px;padding:0;font-size:.9em}.lh-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0}.lh-text{white-space:pre-wrap;font-size:.88em;background:rgba(127,127,127,.08);padding:8px;border-radius:4px}@media(max-width:800px){.lh-cols{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -328,7 +329,26 @@ function measureDetail(m){
     clsCard(esc(REF.low_priority.label),l,l?(l.value?'<span class="flag">Flagged</span> '+esc((l.criteria||[]).map(x=>x+' '+((IDX.lp.get(x)||{}).label||'')).join('; ')):'Not flagged'):'')+
     clsCard('2026 CSRs',c,c?esc((IDX.align.get(c.value)?c.value.replace(/_/g,' '):c.value)+' alignment')+'<div class="small">Primary: '+esc(csrL(c.primary)||'–')+'</div>'+((c.secondary||[]).length?'<div class="small">Secondary: '+esc(c.secondary.map(csrL).join('; '))+'</div>':''):'','<div class="small muted">'+esc(REF.csr_alignment_note)+'</div>')+
     clsCard('Profile (for the aggregate orientation)',p,p?esc([effL(p.effect_type),p.duration&&(IDX.dur.get(p.duration)||{}).label_en,(p.beneficiaries||[]).map(b=>(IDX.ben.get(b)||{}).label_en||b).join(', ')].filter(Boolean).join(' · ')):'')+
-    '</div><h3>Financial effects</h3>'+fiscTable(rows)+'</section>';
+    '</div><h3>Legal history</h3>'+legalHist(m)+'<h3>Financial effects</h3>'+fiscTable(rows)+'</section>';
+}
+function legalHist(m){
+  const h=m.legal_history;
+  if(!h)return '<p class="small muted">Not yet compiled for this measure.</p>';
+  const st={complete:'Complete',partial:'Partial (some texts not retrieved)',not_found:'Not found',not_applicable:'No existing act amended'}[h.status]||h.status;
+  const src=x=>x?'<span class="mono small">'+esc(x)+'</span>':'';
+  const items=(h.items||[]).map(it=>{
+    const act=it.amended_act||{};
+    const chain=(it.chain||[]).length?'<ol class="lh-chain">'+it.chain.map(c=>'<li><b>'+esc(c.year||'')+'</b> '+esc(c.act||'')+(c.provision?', '+esc(c.provision):'')+(c.what_en?' — '+esc(c.what_en):'')+(c.source?' '+src(c.source):'')+'</li>').join('')+'</ol>'+(it.chain_truncated?'<div class="small muted">Chain truncated to the origin and the most recent amendments.</div>':''):'<div class="small muted">No earlier amendments recorded.</div>';
+    const txt=(label,t,note)=>'<div class="lh-col"><div class="small"><b>'+label+'</b>'+(note?' <span class="muted">('+esc(note)+')</span>':'')+'</div>'+(t?'<div class="lh-text">'+esc(t)+'</div>':'<div class="small muted">Not available in the sources consulted.</div>')+'</div>';
+    const basis=it.text_after_basis==='official_consolidated'?'official consolidated text':'derived by applying the bill\'s change to the text before';
+    return '<details class="lh-item"><summary><span class="mono">'+esc(it.bill_ref||'')+'</span> · '+esc(it.provision||'')+' — '+esc(act.label||'')+'</summary>'+
+      (it.numbering_note?'<div class="small"><b>Numbering.</b> '+esc(it.numbering_note)+'</div>':'')+
+      '<div class="small"><b>Change</b> ('+esc(it.change_type||'')+'). '+esc(it.change_summary_en||'')+'</div>'+
+      '<div class="small" style="margin-top:6px"><b>History of the provision</b></div>'+chain+
+      (it.change_type==='standalone'?'':'<div class="lh-cols">'+txt('Text before the bill',it.text_before_it,h.as_of?'as in force, '+h.as_of:'')+txt('Text after the bill',it.text_after_it,basis)+'</div>')+
+      '<div class="small">Sources: '+(it.sources||[]).map(x=>esc(x.kind||'')+' '+src(x.ref)+(x.consolidated_at?' ('+esc(x.consolidated_at)+')':'')).join('; ')+'</div></details>';
+  }).join('');
+  return '<div class="small"><span class="badge">'+esc(st)+'</span> '+(h.as_of?'<span class="muted">'+esc(h.as_of)+'</span>':'')+'</div>'+(h.note?'<div class="small">'+esc(h.note)+'</div>':'')+items;
 }
 function vMeasures(ms){
   if(!D.measures.length)return emptyP('<b>Measures.</b> No measure identified yet. Measures are seeded from the rows of the summary table of financial effects, then merged or split, then completed with provisions that have no financial effects.');

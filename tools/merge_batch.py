@@ -10,6 +10,9 @@ errs=[]; E=errs.append
 pids={x['id'] for x in d['paragraphs']}
 rows={r['id']:r for r in d['fiscal_rows']}
 mids={m['id'] for m in d['measures']}
+A={a['number']:a for a in d['articles']}
+covered_arts={r.split('-')[0] for m in d['measures'] for r in m['refs']}
+prop_arts=set()
 nxt=max(int(i[1:]) for i in mids)+1
 req=['law_id','id','title_en','description_en','refs','fiscal_rows','seed','lineage','thematic','ministry','relevance','low_priority','csr','profile']
 seen=set(); assigned={}
@@ -28,6 +31,14 @@ for k,m in enumerate(p['measures']):
     for r in m.get('refs',[]):
         if r not in pids: E(f"{i}: unknown ref {r}")
     if not m.get('refs'): E(f"{i}: no refs")
+    arts={r.split('-')[0] for r in m.get('refs',[])}
+    if len(arts)!=1: E(f"{i}: article-level rule: refs must belong to one article, got {sorted(arts)}")
+    else:
+        a=next(iter(arts)); n=int(a[1:])
+        allp=[x['id'] if isinstance(x,dict) else x for x in A[n]['paragraphs']]
+        if set(m['refs'])!=set(allp): E(f"{i}: article-level rule: refs must be all paragraphs of {a}; missing {sorted(set(allp)-set(m['refs']))}")
+        if a in covered_arts or a in prop_arts: E(f"{i}: article {a} already has a measure (one article, one measure)")
+        prop_arts.add(a)
     for f in m.get('fiscal_rows',[]):
         if f not in rows: E(f"{i}: unknown row {f}")
         elif rows[f]['match_status']=='matched': E(f"{i}: row {f} already matched to {rows[f]['measure']}")
