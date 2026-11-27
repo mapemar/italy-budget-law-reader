@@ -130,6 +130,7 @@ dl.kv dt{color:var(--ink-3)} dl.kv dd{margin:0}
     <select id="f-csr" aria-label="Filter by Country-Specific Recommendation"></select>
     <select id="f-rel" aria-label="Filter by relevance"></select>
     <select id="f-lp" aria-label="Filter by low-priority flag"></select>
+    <select id="f-es" aria-label="Show revenue or expenditure rows of the financial effects"><option value="">Financial effects: revenue and expenditure</option><option value="E">Revenue rows only (E/S=E)</option><option value="S">Expenditure rows only (E/S=S)</option></select>
     <input type="search" id="f-q" placeholder="Search ID, title, text" aria-label="Search">
     <button type="button" class="btn" id="f-reset">Reset</button>
     <span id="f-count" class="small muted" aria-live="polite"></span>
@@ -154,7 +155,7 @@ const today=()=>{const d=new Date();return String(d.getDate()).padStart(2,'0')+'
 const live=c=>c&&!(c.review&&c.review.status==='rejected')?c:null;
 
 let REG,REF,SCHEMA,D,IDX,YEARS;
-const S={tab:'articles',sel:null,msel:null,bal:'IN',f:{area:'',min:'',csr:'',rel:'',lp:'',q:''}};
+const S={tab:'articles',sel:null,msel:null,bal:'IN',es:'',f:{area:'',min:'',csr:'',rel:'',lp:'',q:''}};
 
 /* ---------- load ---------- */
 (async function(){
@@ -214,8 +215,9 @@ function initControls(){
   $('#f-rel').innerHTML=opt('','Any relevance')+REF.relevance_scale.levels.map(l=>opt(l.id,'Relevance: '+l.id)).join('')+opt('_none','Relevance not yet classified');
   $('#f-lp').innerHTML=opt('','Low-priority flag: any')+opt('yes','Flagged: '+REF.low_priority.label)+opt('no','Not flagged');
   for(const k of ['area','min','csr','rel','lp'])$('#f-'+k).addEventListener('change',e=>{S.f[k]=e.target.value;render()});
+  $('#f-es').addEventListener('change',e=>{S.es=e.target.value;render()});
   let t;$('#f-q').addEventListener('input',e=>{clearTimeout(t);t=setTimeout(()=>{S.f.q=e.target.value.trim();render()},150)});
-  $('#f-reset').addEventListener('click',()=>{S.f={area:'',min:'',csr:'',rel:'',lp:'',q:''};for(const k of ['area','min','csr','rel','lp','q'])$('#f-'+k).value='';render()});
+  $('#f-reset').addEventListener('click',()=>{S.es='';$('#f-es').value='';S.f={area:'',min:'',csr:'',rel:'',lp:'',q:''};for(const k of ['area','min','csr','rel','lp','q'])$('#f-'+k).value='';render()});
   document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{S.tab=b.dataset.tab;setHash('');render()}));
   /* law selector */
   const ls=$('#law-sel');
@@ -288,14 +290,16 @@ function fiscTable(rows,opt={}){
 }
 
 /* Article-level total: one line per measure; component rows of the summary table are kept below, collapsed. Provisional sign rule (U034): rows coded E/S=S (expenditure) are subtracted. */
-function fiscTotal(rows){
-  if(!rows.length)return fiscTable(rows);
-  const sg=r=>/E\/S=S/.test(r.note||'')?-1:1;
+function fiscTotal(all){
+  const esOf=r=>{const m=/E\/S=([ES])/.exec(r.note||'');return m?m[1]:''};
+  const rows=S.es?all.filter(r=>esOf(r)===S.es):all;
+  if(!rows.length)return S.es?'<p class="small muted">No '+(S.es==='E'?'revenue':'expenditure')+' row (E/S='+S.es+') for this selection ('+all.length+' rows in total).</p>':fiscTable(rows);
+  const sg=r=>(!S.es&&/E\/S=S/.test(r.note||''))?-1:1;
   const tot=(b,y)=>{let n=0,t=0;for(const r of rows){const v=val(r,b,y);if(v!=null){t+=sg(r)*v;n++}}return n?Math.round(t*10)/10:null};
   const h1='<tr><th rowspan="2">Total</th>'+BAL.map(b=>'<th class="bg" colspan="'+YEARS.length+'" title="'+esc(balL(b)+' – '+(IDX.bal.get(b)||{}).basis)+'">'+b+'</th>').join('')+'</tr>';
   const h2='<tr>'+BAL.map(()=>YEARS.map((y,i)=>'<th class="num'+(i===0?' bg':'')+'">'+esc(y)+'</th>').join('')).join('')+'</tr>';
   const body='<tr><td><b>Whole article</b><div class="small muted">'+rows.length+' rows of the summary table</div></td>'+BAL.map(b=>YEARS.map((y,i)=>{const v=tot(b,y);return v==null?'<td class="num blank'+(i===0?' bl':'')+'" title="Not given in the source">—</td>':'<td class="num'+(i===0?' bl':'')+'"><b>'+fmt(v)+'</b></td>'}).join('')).join('')+'</tr>';
-  return '<div class="tscroll"><table><caption>'+esc(D.meta.unit_default||'')+'. Provisional sum of the rows below: rows coded E/S=S (expenditure) are subtracted, all others added as printed (sign convention still to be confirmed, U034). — = no row gives a value (not zero).</caption><thead>'+h1+h2+'</thead><tbody>'+body+'</tbody></table></div><details class="lh-item"><summary>Component rows of the summary table ('+rows.length+')</summary>'+fiscTable(rows,{measure:true})+'</details>';
+  return '<div class="tscroll"><table><caption>'+esc(D.meta.unit_default||'')+'. '+(S.es?'Filter on: only '+(S.es==='E'?'revenue (E/S=E)':'expenditure (E/S=S)')+' rows, summed as printed.':'Provisional sum of the rows below: rows coded E/S=S (expenditure) are subtracted, all others added as printed (sign convention still to be confirmed, U034).')+' — = no row gives a value (not zero).</caption><thead>'+h1+h2+'</thead><tbody>'+body+'</tbody></table></div><details class="lh-item"><summary>Component rows of the summary table ('+rows.length+')</summary>'+fiscTable(rows,{measure:true})+'</details>';
 }
 /* Articles navigator */
 function vArticles(){
